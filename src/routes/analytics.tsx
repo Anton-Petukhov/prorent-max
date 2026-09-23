@@ -3,6 +3,7 @@ import { ExpiryBars, MixChart, MixDonut, MixLegend, RentBars } from "@/component
 import { KpiRow } from "@/components/kpis";
 import { eur, m2, pct } from "@/lib/format";
 import { brandTotals } from "@/lib/brand-hall";
+import { electronBook } from "@/lib/electron";
 import { pioneerTotals } from "@/lib/pioneer";
 import { cityRows, metricsAt, vacancyHeat, watchlist } from "@/lib/metrics";
 import { quarterPretty, QUARTERS } from "@/lib/quarters";
@@ -109,6 +110,15 @@ function AnalyticsPage() {
               </dd>
               <Link to="/pioneer" className="text-copper">
                 3D-эталон со стенами
+              </Link>
+            </div>
+            <div className="border-t border-line pt-3">
+              <dt className="text-stone">ТЦ «Электрон»</dt>
+              <dd className="nums mt-1">
+                {m2(electronBook.total)} м² · занято {pct(electronBook.occupancy)}% · вакант {m2(electronBook.vacant)} м²
+              </dd>
+              <Link to="/electron" className="text-copper">
+                План двух этажей
               </Link>
             </div>
           </dl>

@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as BrandHallRouteImport } from './routes/brand-hall'
 import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as ElectronRouteImport } from './routes/electron'
 import { Route as PioneerRouteImport } from './routes/pioneer'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
@@ -36,6 +37,11 @@ const BrandHallRoute = BrandHallRouteImport.update({
 const DocumentsRoute = DocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElectronRoute = ElectronRouteImport.update({
+  id: '/electron',
+  path: '/electron',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PioneerRoute = PioneerRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/brand-hall': typeof BrandHallRoute
   '/documents': typeof DocumentsRoute
+  '/electron': typeof ElectronRoute
   '/pioneer': typeof PioneerRoute
   '/plans': typeof PlansRoute
   '/portfolio': typeof PortfolioRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/brand-hall': typeof BrandHallRoute
   '/documents': typeof DocumentsRoute
+  '/electron': typeof ElectronRoute
   '/pioneer': typeof PioneerRoute
   '/plans': typeof PlansRoute
   '/portfolio': typeof PortfolioRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/brand-hall': typeof BrandHallRoute
   '/documents': typeof DocumentsRoute
+  '/electron': typeof ElectronRoute
   '/pioneer': typeof PioneerRoute
   '/plans': typeof PlansRoute
   '/portfolio': typeof PortfolioRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/brand-hall'
     | '/documents'
+    | '/electron'
     | '/pioneer'
     | '/plans'
     | '/portfolio'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/brand-hall'
     | '/documents'
+    | '/electron'
     | '/pioneer'
     | '/plans'
     | '/portfolio'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/brand-hall'
     | '/documents'
+    | '/electron'
     | '/pioneer'
     | '/plans'
     | '/portfolio'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   BrandHallRoute: typeof BrandHallRoute
   DocumentsRoute: typeof DocumentsRoute
+  ElectronRoute: typeof ElectronRoute
   PioneerRoute: typeof PioneerRoute
   PlansRoute: typeof PlansRoute
   PortfolioRoute: typeof PortfolioRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/documents'
       fullPath: '/documents'
       preLoaderRoute: typeof DocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/electron': {
+      id: '/electron'
+      path: '/electron'
+      fullPath: '/electron'
+      preLoaderRoute: typeof ElectronRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pioneer': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   BrandHallRoute: BrandHallRoute,
   DocumentsRoute: DocumentsRoute,
+  ElectronRoute: ElectronRoute,
   PioneerRoute: PioneerRoute,
   PlansRoute: PlansRoute,
   PortfolioRoute: PortfolioRoute,

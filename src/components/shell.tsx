@@ -12,6 +12,7 @@ const LINKS = [
   { to: "/plans", label: "Планы 3D" },
   { to: "/brand-hall", label: "Брэнд Холл" },
   { to: "/pioneer", label: "Пионер" },
+  { to: "/electron", label: "Электрон" },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {

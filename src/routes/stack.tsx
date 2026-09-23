@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { brandFloors, kindMeta } from "@/lib/brand-hall";
+import { electronFloors, electronStatus } from "@/lib/electron";
 import { m2 } from "@/lib/format";
 import { isHeld, isLeased, zoneArea } from "@/lib/portfolio";
 import { pioneerFloors, pioneerRooms, pioneerStatus } from "@/lib/pioneer";
@@ -33,7 +34,7 @@ function StackPage() {
   const qi = usePortfolio((state) => state.qi);
   const assets = useResolvedAssets();
   const held = assets.filter((asset) => isHeld(asset, qi));
-  const books = useMemo(() => ["book", "brand", "pioneer"] as const, []);
+  const books = useMemo(() => ["book", "brand", "pioneer", "electron"] as const, []);
   const [book, setBook] = useState<(typeof books)[number]>("book");
   const [tone, setTone] = useState<Tone | "all">("all");
   const [assetId, setAssetId] = useState<string>("all");
@@ -42,6 +43,7 @@ function StackPage() {
   const rows = useMemo<Row[]>(() => {
     if (book === "brand") return brandRows();
     if (book === "pioneer") return pioneerRows();
+    if (book === "electron") return electronRows();
     const source = assetId === "all" ? held : held.filter((asset) => asset.id === assetId);
     return source.flatMap((asset) =>
       asset.floors.map((floor) => {
@@ -80,7 +82,7 @@ function StackPage() {
         <h1 className="mt-2 font-display text-4xl sm:text-5xl">Шахматка</h1>
         <p className="mt-3 max-w-2xl text-ink-soft">
           Этаж — строка, помещение — клетка. Ширина клетки следует площади. Европейская книга слушает машину
-          времени, «Пионер» и «Брэнд Холл» остаются схемами из архива.
+          времени, «Пионер», «Брэнд Холл» и «Электрон» остаются схемами из архива.
         </p>
       </header>
 
@@ -90,6 +92,7 @@ function StackPage() {
             ["book", "Книга"],
             ["brand", "Брэнд Холл"],
             ["pioneer", "Пионер"],
+            ["electron", "Электрон"],
           ] as const
         ).map(([id, name]) => (
           <button key={id} type="button" className={book === id ? "btn" : "btn btn-ghost"} onClick={() => setBook(id)}>
@@ -162,6 +165,8 @@ function StackPage() {
         Планы этих объектов: <Link to="/brand-hall" className="text-copper">Брэнд Холл</Link>
         {" · "}
         <Link to="/pioneer" className="text-copper">Пионер</Link>
+        {" · "}
+        <Link to="/electron" className="text-copper">Электрон</Link>
       </p>
     </div>
   );
@@ -186,6 +191,22 @@ function brandRows(): Row[] {
       area: room.area ?? 28,
       tone: room.kind === "vacant" ? "vacant" : room.kind === "service" ? "service" : "leased",
       note: room.area === null ? "площадь не указана" : kindMeta[room.kind].label,
+    })),
+  }));
+}
+
+function electronRows(): Row[] {
+  return electronFloors.map((floor) => ({
+    id: `electron-${floor.number}`,
+    label: `Электрон · ${floor.name}`,
+    area: floor.rooms.reduce((sum, room) => sum + room.area, 0),
+    cells: floor.rooms.map((room) => ({
+      id: room.id,
+      name: `${room.id} ${room.name}`,
+      tenant: room.name,
+      area: room.area,
+      tone: room.status === "vacant" ? "vacant" : "leased",
+      note: electronStatus[room.status].label,
     })),
   }));
 }

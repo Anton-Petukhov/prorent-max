@@ -4,6 +4,7 @@ import { MixChart, MixDonut, MixLegend } from "@/components/charts";
 import { KpiRow } from "@/components/kpis";
 import { brandTotals } from "@/lib/brand-hall";
 import { eur, m2, pct } from "@/lib/format";
+import { electronBook } from "@/lib/electron";
 import { pioneerTotals } from "@/lib/pioneer";
 import { assetSnaps, eventsBetween, metricsAt } from "@/lib/metrics";
 import { quarterPretty, QUARTERS } from "@/lib/quarters";
@@ -115,6 +116,13 @@ function Home() {
           <h2 className="mt-2 font-display text-3xl">Галерея «Пионер»</h2>
           <p className="nums mt-3 text-sm text-stone">
             {m2(pioneerTotals().total)} м² · занято {pct(pioneerTotals().occupancy)}% · бронь {m2(pioneerTotals().reserved)} м²
+          </p>
+        </Link>
+        <Link to="/electron" className="panel block p-5">
+          <p className="kicker">Иркутск · 20.07.2026</p>
+          <h2 className="mt-2 font-display text-3xl">ТЦ «Электрон»</h2>
+          <p className="nums mt-3 text-sm text-stone">
+            {m2(electronBook.total)} м² · занято {pct(electronBook.occupancy)}% · вакант {m2(electronBook.vacant)} м²
           </p>
         </Link>
       </section>
