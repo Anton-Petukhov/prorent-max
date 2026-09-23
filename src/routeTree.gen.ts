@@ -11,9 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
+import { Route as BrandHallRouteImport } from './routes/brand-hall'
 import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as PioneerRouteImport } from './routes/pioneer'
 import { Route as PlansRouteImport } from './routes/plans'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as StackRouteImport } from './routes/stack'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -25,9 +28,19 @@ const AnalyticsRoute = AnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandHallRoute = BrandHallRouteImport.update({
+  id: '/brand-hall',
+  path: '/brand-hall',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DocumentsRoute = DocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PioneerRoute = PioneerRouteImport.update({
+  id: '/pioneer',
+  path: '/pioneer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlansRoute = PlansRouteImport.update({
@@ -40,43 +53,85 @@ const PortfolioRoute = PortfolioRouteImport.update({
   path: '/portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StackRoute = StackRouteImport.update({
+  id: '/stack',
+  path: '/stack',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
+  '/brand-hall': typeof BrandHallRoute
   '/documents': typeof DocumentsRoute
+  '/pioneer': typeof PioneerRoute
   '/plans': typeof PlansRoute
   '/portfolio': typeof PortfolioRoute
+  '/stack': typeof StackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
+  '/brand-hall': typeof BrandHallRoute
   '/documents': typeof DocumentsRoute
+  '/pioneer': typeof PioneerRoute
   '/plans': typeof PlansRoute
   '/portfolio': typeof PortfolioRoute
+  '/stack': typeof StackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
+  '/brand-hall': typeof BrandHallRoute
   '/documents': typeof DocumentsRoute
+  '/pioneer': typeof PioneerRoute
   '/plans': typeof PlansRoute
   '/portfolio': typeof PortfolioRoute
+  '/stack': typeof StackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analytics' | '/documents' | '/plans' | '/portfolio'
+  fullPaths:
+    | '/'
+    | '/analytics'
+    | '/brand-hall'
+    | '/documents'
+    | '/pioneer'
+    | '/plans'
+    | '/portfolio'
+    | '/stack'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analytics' | '/documents' | '/plans' | '/portfolio'
-  id: '__root__' | '/' | '/analytics' | '/documents' | '/plans' | '/portfolio'
+  to:
+    | '/'
+    | '/analytics'
+    | '/brand-hall'
+    | '/documents'
+    | '/pioneer'
+    | '/plans'
+    | '/portfolio'
+    | '/stack'
+  id:
+    | '__root__'
+    | '/'
+    | '/analytics'
+    | '/brand-hall'
+    | '/documents'
+    | '/pioneer'
+    | '/plans'
+    | '/portfolio'
+    | '/stack'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyticsRoute: typeof AnalyticsRoute
+  BrandHallRoute: typeof BrandHallRoute
   DocumentsRoute: typeof DocumentsRoute
+  PioneerRoute: typeof PioneerRoute
   PlansRoute: typeof PlansRoute
   PortfolioRoute: typeof PortfolioRoute
+  StackRoute: typeof StackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,11 +150,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brand-hall': {
+      id: '/brand-hall'
+      path: '/brand-hall'
+      fullPath: '/brand-hall'
+      preLoaderRoute: typeof BrandHallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/documents': {
       id: '/documents'
       path: '/documents'
       fullPath: '/documents'
       preLoaderRoute: typeof DocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pioneer': {
+      id: '/pioneer'
+      path: '/pioneer'
+      fullPath: '/pioneer'
+      preLoaderRoute: typeof PioneerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/plans': {
@@ -116,15 +185,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stack': {
+      id: '/stack'
+      path: '/stack'
+      fullPath: '/stack'
+      preLoaderRoute: typeof StackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyticsRoute: AnalyticsRoute,
+  BrandHallRoute: BrandHallRoute,
   DocumentsRoute: DocumentsRoute,
+  PioneerRoute: PioneerRoute,
   PlansRoute: PlansRoute,
   PortfolioRoute: PortfolioRoute,
+  StackRoute: StackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

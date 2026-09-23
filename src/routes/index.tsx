@@ -2,7 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AssetCard } from "@/components/asset-card";
 import { MixChart, MixDonut, MixLegend } from "@/components/charts";
 import { KpiRow } from "@/components/kpis";
+import { brandTotals } from "@/lib/brand-hall";
 import { eur, m2, pct } from "@/lib/format";
+import { pioneerTotals } from "@/lib/pioneer";
 import { assetSnaps, eventsBetween, metricsAt } from "@/lib/metrics";
 import { quarterPretty, QUARTERS } from "@/lib/quarters";
 import { usePortfolio, useResolvedAssets } from "@/lib/store";
@@ -98,6 +100,23 @@ function Home() {
             />
           ))}
         </div>
+      </section>
+
+      <section className="grid gap-4 sm:grid-cols-2">
+        <Link to="/brand-hall" className="panel block p-5">
+          <p className="kicker">Иркутск</p>
+          <h2 className="mt-2 font-display text-3xl">ТД «Брэнд Холл»</h2>
+          <p className="nums mt-3 text-sm text-stone">
+            {m2(brandTotals.total)} м² · торговля {m2(brandTotals.trade)} · вакант {m2(brandTotals.vacant)}
+          </p>
+        </Link>
+        <Link to="/pioneer" className="panel block p-5">
+          <p className="kicker">3D-эталон</p>
+          <h2 className="mt-2 font-display text-3xl">Галерея «Пионер»</h2>
+          <p className="nums mt-3 text-sm text-stone">
+            {m2(pioneerTotals().total)} м² · занято {pct(pioneerTotals().occupancy)}% · бронь {m2(pioneerTotals().reserved)} м²
+          </p>
+        </Link>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">

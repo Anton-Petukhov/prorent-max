@@ -7,8 +7,11 @@ const LINKS = [
   { to: "/", label: "Обзор" },
   { to: "/portfolio", label: "Портфель" },
   { to: "/analytics", label: "Аналитика" },
+  { to: "/stack", label: "Шахматка" },
   { to: "/documents", label: "Документы" },
   { to: "/plans", label: "Планы 3D" },
+  { to: "/brand-hall", label: "Брэнд Холл" },
+  { to: "/pioneer", label: "Пионер" },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {

@@ -1,8 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ExpiryBars, MixChart, MixDonut, MixLegend, RentBars } from "@/components/charts";
 import { KpiRow } from "@/components/kpis";
 import { eur, m2, pct } from "@/lib/format";
-import { cityRows, metricsAt, vacancyHeat } from "@/lib/metrics";
+import { brandTotals } from "@/lib/brand-hall";
+import { pioneerTotals } from "@/lib/pioneer";
+import { cityRows, metricsAt, vacancyHeat, watchlist } from "@/lib/metrics";
 import { quarterPretty, QUARTERS } from "@/lib/quarters";
 import { usePortfolio, useResolvedAssets } from "@/lib/store";
 
@@ -16,6 +18,8 @@ function AnalyticsPage() {
   const metrics = metricsAt(assets, qi);
   const cities = cityRows(assets, qi);
   const heat = vacancyHeat(assets);
+  const watch = watchlist(assets, qi);
+  const pioneer = pioneerTotals();
   const names = [...new Map(heat.map((cell) => [cell.assetId, cell])).values()];
   const label = QUARTERS[qi] ?? "2026-Q3";
 
@@ -52,6 +56,63 @@ function AnalyticsPage() {
         <h2 className="font-display text-2xl">Истечение договоров</h2>
         <p className="mb-2 text-sm text-stone">Площадь, у которой год окончания попадает в корзину. Считается от выбранного квартала.</p>
         <ExpiryBars assets={assets} qi={qi} />
+      </section>
+      <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <article className="panel p-4 sm:p-5">
+          <div className="mb-3 flex items-end justify-between gap-3">
+            <div>
+              <p className="kicker">Ближайший год</p>
+              <h2 className="font-display text-2xl">Что требует внимания</h2>
+            </div>
+            <Link to="/stack" className="text-sm text-copper">
+              Шахматка
+            </Link>
+          </div>
+          <p className="nums text-sm text-stone">
+            Потери от вакансии около {eur(watch.loss)} €/год при текущей проходящей ставке. Свободных зон:{" "}
+            {watch.vacantZones} из {watch.zones}.
+          </p>
+          <ul className="mt-4 flex flex-col gap-3">
+            {watch.endings.length === 0 ? <li className="text-sm text-stone">Окончаний в ближайшие четыре квартала нет.</li> : null}
+            {watch.endings.map((event) => (
+              <li key={`${event.qi}-${event.detail}`} className="border-t border-line pt-3 text-sm">
+                <p>{event.title}</p>
+                <p className="text-stone">{event.detail}</p>
+              </li>
+            ))}
+            {watch.starts.map((event) => (
+              <li key={`${event.qi}-${event.detail}`} className="border-t border-line pt-3 text-sm">
+                <p>{event.title}</p>
+                <p className="text-stone">{event.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article className="panel p-4 sm:p-5">
+          <p className="kicker">Архив Иркутска</p>
+          <h2 className="font-display text-2xl">Отдельные книги</h2>
+          <p className="mt-2 text-sm text-stone">Не смешаны с европейской лентой: там нет квартальной истории.</p>
+          <dl className="mt-4 grid gap-3 text-sm">
+            <div className="border-t border-line pt-3">
+              <dt className="text-stone">Брэнд Холл</dt>
+              <dd className="nums mt-1">
+                {m2(brandTotals.total)} м² учтено · торговля {m2(brandTotals.trade)} · вакант {m2(brandTotals.vacant)}
+              </dd>
+              <Link to="/brand-hall" className="text-copper">
+                3D и статистика уровней
+              </Link>
+            </div>
+            <div className="border-t border-line pt-3">
+              <dt className="text-stone">Галерея «Пионер»</dt>
+              <dd className="nums mt-1">
+                {pct(pioneer.occupancy)}% занято · бронь {m2(pioneer.reserved)} м² · свободно {m2(pioneer.vacant)} м²
+              </dd>
+              <Link to="/pioneer" className="text-copper">
+                3D-эталон со стенами
+              </Link>
+            </div>
+          </dl>
+        </article>
       </section>
       <section className="panel p-4 sm:p-5">
         <h2 className="font-display text-2xl">Вакантность, III квартал</h2>

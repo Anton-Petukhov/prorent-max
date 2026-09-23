@@ -130,6 +130,86 @@
   .dock {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
+
+  .three-floor-stage {
+    position: relative;
+    height: var(--spacing-canvas);
+    overflow: hidden;
+    background: var(--color-bone);
+  }
+
+  .three-floor-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .three-loading,
+  .three-stage-help,
+  .three-stage-topbar,
+  .three-edit-panel {
+    position: absolute;
+    z-index: 2;
+    font-size: 0.75rem;
+    color: var(--color-ink-soft);
+  }
+
+  .three-loading {
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--color-bone);
+  }
+
+  .three-stage-topbar,
+  .three-edit-panel,
+  .three-stage-help {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-paper) 92%, transparent);
+    padding: 0.35rem 0.6rem;
+  }
+
+  .three-stage-topbar {
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    justify-content: space-between;
+  }
+
+  .three-stage-actions,
+  .three-stage-topbar button,
+  .three-edit-panel button {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .three-stage-topbar button,
+  .three-edit-panel button {
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+    padding: 0.25rem 0.5rem;
+    color: var(--color-ink);
+  }
+
+  .three-stage-topbar button.active {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .three-edit-panel {
+    top: 3.4rem;
+    left: 0.75rem;
+  }
+
+  .three-stage-help {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

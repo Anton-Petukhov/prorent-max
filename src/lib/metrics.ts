@@ -307,3 +307,27 @@ function pushEdge(
     detail: tone === "start" ? `Старт · ${asset.name}, ${item.name}` : `Окончание · ${asset.name}, ${item.name}`,
   });
 }
+
+export function watchlist(assets: Asset[], qi: number) {
+  const metrics = metricsAt(assets, qi);
+  let zones = 0;
+  let vacantZones = 0;
+  for (const asset of assets) {
+    if (!isHeld(asset, qi)) continue;
+    for (const floor of asset.floors) {
+      for (const item of floor.zones) {
+        if (zoneArea(item) <= 0) continue;
+        zones += 1;
+        if (!isLeased(item, qi)) vacantZones += 1;
+      }
+    }
+  }
+  const upcoming = eventsBetween(assets, qi, Math.min(QUARTERS.length - 1, qi + 3));
+  return {
+    loss: metrics.vacant * metrics.rentPerM2,
+    zones,
+    vacantZones,
+    endings: upcoming.filter((event) => event.tone === "end").slice(0, 4),
+    starts: upcoming.filter((event) => event.tone === "start").slice(0, 3),
+  };
+}
