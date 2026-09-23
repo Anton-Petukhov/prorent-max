@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,450;1,500&family=Outfit:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+
+  --color-bone: #efeae2;
+  --color-paper: #f7f4ee;
+  --color-ink: #1a1814;
+  --color-ink-soft: #3c3832;
+  --color-stone: #8a8378;
+  --color-line: #e2dbd0;
+  --color-copper: #c0562a;
+  --color-copper-deep: #8d3c1c;
+  --color-pine: #1f3d34;
+  --color-pine-mid: #3e6b58;
+  --color-vacant: #d5cec3;
+  --color-slab: #d9d2c6;
+
+  --tracking-caps: 0.16em;
+  --spacing-canvas: 34rem;
+
+  --radius-sm: 2px;
+  --radius-md: 6px;
+}
+
+@layer base {
+  html {
+    background: var(--color-bone);
+    color: var(--color-ink);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bone);
+    color: var(--color-ink);
+    min-height: 100%;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-copper);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  .nums {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  .btn {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    background: var(--color-ink);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-paper);
+    transition: background-color 200ms ease;
+  }
+
+  .btn:hover:not(:disabled) {
+    background: var(--color-ink-soft);
+  }
+
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  .btn-copper {
+    background: var(--color-copper);
+    color: var(--color-paper);
+  }
+
+  .btn-copper:hover:not(:disabled) {
+    background: var(--color-copper-deep);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--color-paper);
+  }
+
+  .btn-dark {
+    background: transparent;
+    color: var(--color-paper);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 35%, transparent);
+  }
+
+  .btn-dark:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--color-paper) 12%, transparent);
+  }
+
+  .panel {
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+  }
+
+  .kicker {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-stone);
+  }
+
+  .dock {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
