@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { deriveWalls, electronStatus, type ElectronFloor, type ElectronRoom } from "@/lib/electron";
+import { deriveWalls, electronFloors, electronStatus, type ElectronFloor, type ElectronRoom } from "@/lib/electron";
 
 const WALL_H = 2.55 * 0.8;
 const GLASS_H = 2.34 * 0.8;
@@ -14,7 +14,7 @@ function createLabel(room: ElectronRoom) {
   canvas.height = 176;
   const context = canvas.getContext("2d");
   if (!context) return null;
-  const title = `${room.id} · ${room.name}`;
+  const title = room.sheetId && room.sheetId !== room.id ? `${room.sheetId} → ${room.id}` : `${room.id} · ${room.name}`;
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = `${electronStatus[room.status].color}ed`;
   context.strokeStyle = "rgba(31,43,53,.22)";
@@ -52,25 +52,30 @@ type Props = {
 export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }: Props) {
   const hostRef = useRef<HTMLDivElement>(null);
   const refreshRef = useRef<(() => void) | null>(null);
+  const paintRef = useRef<(() => void) | null>(null);
   const resetRef = useRef<(() => void) | null>(null);
   const selectedRef = useRef(selectedId);
   const visibleRef = useRef(visibleIds);
+  const roomsRef = useRef(floor.rooms);
   const onSelectRef = useRef(onSelect);
   const [ready, setReady] = useState(false);
 
   selectedRef.current = selectedId;
   visibleRef.current = visibleIds;
+  roomsRef.current = floor.rooms;
   onSelectRef.current = onSelect;
+  const paintKey = floor.rooms.map((room) => `${room.id}:${room.area}:${room.status}:${room.name}:${room.sheetId ?? ""}:${room.layout ?? ""}`).join("|");
 
   useEffect(() => {
     const host = hostRef.current;
-    if (!host) return;
+    const plan = electronFloors.find((item) => item.number === floor.number);
+    if (!host || !plan) return;
     setReady(false);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.domElement.setAttribute("aria-label", `Трёхмерный план: ${floor.name}`);
+    renderer.domElement.setAttribute("aria-label", `Трёхмерный план: ${plan.name}`);
     host.prepend(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -96,7 +101,7 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
     sun.position.set(-15, 30, 10);
     scene.add(sun);
 
-    const [cropX, cropY, cropW, cropH] = floor.crop;
+    const [cropX, cropY, cropW, cropH] = plan.crop;
     const scale = 24 / Math.max(cropW, cropH);
     const originX = cropX + cropW / 2;
     const originY = cropY + cropH / 2;
@@ -118,7 +123,7 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
     scene.add(slab);
     const loader = new THREE.TextureLoader();
     let texture: THREE.Texture | null = null;
-    loader.load(`/electron/floor-${floor.number}.webp`, (map) => {
+    loader.load(`/electron/floor-${plan.number}.webp`, (map) => {
       texture = map;
       map.colorSpace = THREE.SRGBColorSpace;
       map.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
@@ -126,7 +131,7 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
       slab.material.needsUpdate = true;
     });
 
-    const { solidWalls, partitions } = deriveWalls(floor);
+    const { solidWalls, partitions } = deriveWalls(plan);
     const extrusions = solidWalls
       .map((ring) => {
         const shape = toShape(ring);
@@ -164,7 +169,7 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
     const hits: THREE.Mesh[] = [];
     const labels = new Map<string, THREE.Sprite>();
     const outlines = new Map<string, THREE.LineLoop>();
-    for (const room of floor.rooms) {
+    for (const room of plan.rooms) {
       const label = createLabel(room);
       if (label) {
         label.position.set((room.label[0] - originX) * scale, WALL_H + 0.7, (room.label[1] - originY) * scale);
@@ -200,12 +205,31 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
       }
     }
 
+    const onSheet = (id: string) => {
+      const paint = roomsRef.current.find((room) => room.id === id);
+      return Boolean(paint && paint.area > 0 && paint.layout !== "missing");
+    };
+    const paintLabels = () => {
+      for (const [id, sprite] of labels) {
+        const paint = roomsRef.current.find((room) => room.id === id);
+        if (!paint || paint.area <= 0 || paint.layout === "missing") {
+          sprite.visible = false;
+          continue;
+        }
+        const next = createLabel(paint);
+        if (!next?.material.map) continue;
+        const previous = sprite.material;
+        sprite.material = next.material;
+        previous.map?.dispose();
+        previous.dispose();
+      }
+    };
     const refresh = () => {
       const visible = new Set(visibleRef.current);
       for (const mesh of hits) {
         const id = mesh.userData.roomId as string;
         const material = mesh.material as THREE.MeshBasicMaterial;
-        const shown = visible.has(id);
+        const shown = visible.has(id) && onSheet(id);
         const active = shown && selectedRef.current === id;
         material.opacity = active ? 0.28 : 0;
         material.color.set(active ? 0xc0562a : 0xffffff);
@@ -219,6 +243,7 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
       }
     };
     refreshRef.current = refresh;
+    paintRef.current = paintLabels;
     refresh();
 
     const raycaster = new THREE.Raycaster();
@@ -282,9 +307,15 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
       renderer.dispose();
       renderer.domElement.remove();
       refreshRef.current = null;
+      paintRef.current = null;
       resetRef.current = null;
     };
-  }, [floor]);
+  }, [floor.number]);
+
+  useEffect(() => {
+    paintRef.current?.();
+    refreshRef.current?.();
+  }, [paintKey]);
 
   useEffect(() => {
     refreshRef.current?.();

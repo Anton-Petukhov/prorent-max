@@ -1,1 +1,2403 @@
-[{"date":"2022-11-30","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"trade"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":819.36,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"trade","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"vacant","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"vacant"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"trade"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2023-11-22","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"vacant"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":819.36,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"trade","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"vacant","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"vacant"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"trade"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2024-02-19","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"vacant"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":819.36,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"vacant","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"vacant"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"trade"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2024-03-15","note":"Лист со старыми номерами рядом с новыми: сверка, площади те же.","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"vacant"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":819.36,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"vacant","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"vacant"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"trade"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2024-07-18","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"vacant"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":819.36,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2024-12-06","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"vacant"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":819.36,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"vacant"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-01-17","rooms":[{"floor":1,"id":"1.01","area":262.73,"kind":"vacant"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":981.69,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"vacant"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-06-20","rooms":[{"floor":1,"id":"1.01","area":288.31,"kind":"vacant","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":981.69,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"vacant"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":35.13,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-07-25","rooms":[{"floor":1,"id":"1.01","area":289.24,"kind":"vacant","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":981.69,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"vacant"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":33.5,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-10-07","note":"На листе только 2 этаж. 1 этаж взят со схемы 25.07.2025, чтобы график не обрывался.","rooms":[{"floor":1,"id":"1.01","area":289.24,"kind":"vacant","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":981.69,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"vacant"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":33.5,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-10-29","rooms":[{"floor":1,"id":"1.01","area":289.24,"kind":"trade","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"vacant"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.07","area":33.5,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-11-12","rooms":[{"floor":1,"id":"1.01","area":289.24,"kind":"trade","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"trade","sheetId":"1.11"},{"floor":1,"id":"1.07","area":33.5,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-12-05","rooms":[{"floor":1,"id":"1.01","area":336.15,"kind":"trade","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":544,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"trade","sheetId":"1.11"},{"floor":1,"id":"1.07","area":33.5,"kind":"trade","sheetId":"1.09"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"trade"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1567.43,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2025-12-26","rooms":[{"floor":1,"id":"1.01","area":336.15,"kind":"trade","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":808.9,"kind":"trade","sheetId":"250"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"trade"},{"floor":2,"id":"2.03","area":23.66,"kind":"vacant"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1617.28,"kind":"vacant"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2026-05-12","rooms":[{"floor":1,"id":"1.01","area":336.15,"kind":"trade","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":808.9,"kind":"trade","sheetId":"250"},{"floor":1,"id":"1.05","area":24.29,"kind":"trade","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"trade","sheetId":"1.11"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"vacant"},{"floor":2,"id":"2.03","area":23.66,"kind":"vacant"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1617.28,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2026-06-24","rooms":[{"floor":1,"id":"1.01","area":336.15,"kind":"trade","sheetId":"230а"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":808.9,"kind":"trade","sheetId":"250"},{"floor":1,"id":"1.05","area":24.29,"kind":"vacant","sheetId":"1.06"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant","sheetId":"1.11"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade","sheetId":"239"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":1,"kind":"trade","sheetId":"261"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade","sheetId":"2.06"},{"floor":2,"id":"2.02","area":19.94,"kind":"vacant"},{"floor":2,"id":"2.03","area":23.66,"kind":"vacant"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1617.28,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]},{"date":"2026-07-20","note":"745,7 м² — площадь DNS. «общ. 808,9» на лист не входит: это 745,7 плюс склад 63,2.","rooms":[{"floor":1,"id":"1.01","area":336.15,"kind":"trade"},{"floor":1,"id":"1.02","area":149.38,"kind":"trade"},{"floor":1,"id":"1.03","area":1047.05,"kind":"trade"},{"floor":1,"id":"1.04","area":745.7,"kind":"trade"},{"floor":1,"id":"1.05","area":24.29,"kind":"vacant"},{"floor":1,"id":"1.06","area":16.2,"kind":"vacant"},{"floor":1,"id":"1.07","area":63.2,"kind":"storage"},{"floor":1,"id":"1.08","area":57.07,"kind":"trade"},{"floor":1,"id":"1.10","area":478.97,"kind":"trade"},{"floor":1,"id":"1.11","area":2,"kind":"trade"},{"floor":1,"id":"1.12","area":1,"kind":"trade"},{"floor":1,"id":"1.13","area":1,"kind":"trade"},{"floor":2,"id":"2.01","area":1326.27,"kind":"trade"},{"floor":2,"id":"2.02","area":19.94,"kind":"vacant"},{"floor":2,"id":"2.03","area":23.66,"kind":"vacant"},{"floor":2,"id":"2.04","area":23.71,"kind":"vacant"},{"floor":2,"id":"2.05","area":23.86,"kind":"vacant"},{"floor":2,"id":"2.06","area":27.75,"kind":"vacant"},{"floor":2,"id":"2.07","area":1617.28,"kind":"trade"},{"floor":2,"id":"2.08","area":6,"kind":"vacant"},{"floor":2,"id":"2.09","area":5,"kind":"vacant"}]}]
+[
+  {
+    "date": "2022-11-30",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 819.36,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.47,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 35.13,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant"
+      }
+    ]
+  },
+  {
+    "date": "2023-11-22",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 819.36,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.47,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 35.13,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant"
+      }
+    ]
+  },
+  {
+    "date": "2024-02-19",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 819.36,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant"
+      }
+    ]
+  },
+  {
+    "date": "2024-03-15",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 819.36,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "vacant",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "vacant",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "trade",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2024-07-18",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 819.36,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2024-12-06",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 819.36,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "vacant",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2025-01-17",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 262.73,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 981.69,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "vacant",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "1.03 вырос с 819 до 982. На листе пометка «до 1270»."
+  },
+  {
+    "date": "2025-06-20",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 288.31,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 981.69,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "vacant",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.19,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "1.01 вырос со 263 до 288."
+  },
+  {
+    "date": "2025-07-25",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 289.24,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 981.69,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "vacant",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.7,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2025-10-07",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 289.24,
+        "kind": "vacant",
+        "legacy": "201"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 981.69,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "vacant",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.7,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "На листе только 2 этаж. 1 этаж оставлен со схемы 25.07.2025."
+  },
+  {
+    "date": "2025-10-29",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 112.5,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "vacant",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "vacant",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "vacant",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.7,
+        "kind": "vacant",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "1.03 стал 1047."
+  },
+  {
+    "date": "2025-11-12",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 112.5,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "trade",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "trade",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.7,
+        "kind": "trade",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "trade",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-05",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 336.15,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 544,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 150,
+        "kind": "trade",
+        "legacy": "249"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 47.48,
+        "kind": "trade",
+        "legacy": "246"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.09",
+        "area": 33.5,
+        "kind": "trade",
+        "legacy": "240"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 29.7,
+        "kind": "trade",
+        "legacy": "241"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "trade",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "trade",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1567.43,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "1.01 стал 336."
+  },
+  {
+    "date": "2025-12-26",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 336.15,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 808.9,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "trade",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "vacant",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1617.28,
+        "kind": "vacant"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "Перепланировка: 1.04 разросся с 544 до 809, пропали 1.05, 1.07, 1.09 и 1.10. 2.07 вырос с 1567 до 1617."
+  },
+  {
+    "date": "2026-05-12",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 336.15,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 808.9,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "trade",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "trade",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "vacant",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "vacant",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1617.28,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2026-06-24",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 336.15,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 808.9,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 24.29,
+        "kind": "vacant",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "vacant",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "vacant",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1617.28,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ]
+  },
+  {
+    "date": "2026-07-20",
+    "rooms": [
+      {
+        "floor": 1,
+        "id": "1.01",
+        "area": 336.15,
+        "kind": "trade",
+        "legacy": "230а"
+      },
+      {
+        "floor": 1,
+        "id": "1.02",
+        "area": 149.38,
+        "kind": "trade",
+        "legacy": "224"
+      },
+      {
+        "floor": 1,
+        "id": "1.03",
+        "area": 1047.05,
+        "kind": "trade",
+        "legacy": "230"
+      },
+      {
+        "floor": 1,
+        "id": "1.04",
+        "area": 745.7,
+        "kind": "trade",
+        "legacy": "250"
+      },
+      {
+        "floor": 1,
+        "id": "1.05",
+        "area": 24.29,
+        "kind": "vacant",
+        "legacy": "247"
+      },
+      {
+        "floor": 1,
+        "id": "1.06",
+        "area": 16.2,
+        "kind": "vacant",
+        "legacy": "242"
+      },
+      {
+        "floor": 1,
+        "id": "1.07",
+        "area": 63.2,
+        "kind": "storage"
+      },
+      {
+        "floor": 1,
+        "id": "1.08",
+        "area": 57.07,
+        "kind": "trade",
+        "legacy": "239"
+      },
+      {
+        "floor": 1,
+        "id": "1.10",
+        "area": 478.97,
+        "kind": "trade"
+      },
+      {
+        "floor": 1,
+        "id": "1.11",
+        "area": 2,
+        "kind": "trade",
+        "legacy": "260"
+      },
+      {
+        "floor": 1,
+        "id": "1.12",
+        "area": 1,
+        "kind": "trade",
+        "legacy": "262"
+      },
+      {
+        "floor": 1,
+        "id": "1.13",
+        "area": 1,
+        "kind": "trade",
+        "legacy": "199"
+      },
+      {
+        "floor": 2,
+        "id": "2.01",
+        "area": 1326.27,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.02",
+        "area": 19.94,
+        "kind": "vacant",
+        "legacy": "301"
+      },
+      {
+        "floor": 2,
+        "id": "2.03",
+        "area": 23.66,
+        "kind": "vacant",
+        "legacy": "302"
+      },
+      {
+        "floor": 2,
+        "id": "2.04",
+        "area": 23.71,
+        "kind": "vacant",
+        "legacy": "303"
+      },
+      {
+        "floor": 2,
+        "id": "2.05",
+        "area": 23.86,
+        "kind": "vacant",
+        "legacy": "304"
+      },
+      {
+        "floor": 2,
+        "id": "2.06",
+        "area": 27.75,
+        "kind": "vacant",
+        "legacy": "305"
+      },
+      {
+        "floor": 2,
+        "id": "2.07",
+        "area": 1617.28,
+        "kind": "trade"
+      },
+      {
+        "floor": 2,
+        "id": "2.08",
+        "area": 6,
+        "kind": "vacant",
+        "legacy": "307"
+      },
+      {
+        "floor": 2,
+        "id": "2.09",
+        "area": 5,
+        "kind": "vacant",
+        "legacy": "306"
+      }
+    ],
+    "note": "Другая нарезка: зал 479 подписан 1.10, а не 1.12. Из 808,9 выделены 745,7 торговли и склад 1.07 на 63,2."
+  }
+]

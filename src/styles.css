@@ -25,6 +25,17 @@
   --radius-md: 6px;
 }
 
+html[data-theme="dark"] {
+  --color-bone: #2b3034;
+  --color-paper: #383e42;
+  --color-ink: #f3f0ea;
+  --color-ink-soft: #d4cfc6;
+  --color-stone: #a8a197;
+  --color-line: #4e565b;
+  --color-slab: #31373b;
+  color-scheme: dark;
+}
+
 @layer base {
   html {
     background: var(--color-bone);

@@ -27,6 +27,11 @@ export const Route = createRootRoute({
   component: () => (
     <html lang="ru" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("prorent-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`,
+          }}
+        />
         <HeadContent />
       </head>
       <body>

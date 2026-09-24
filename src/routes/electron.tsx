@@ -1,16 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ElectronPlan from "@/components/electron-plan";
 import { AreaMix, DonutMix, MixLegend, StackBars } from "@/components/charts";
-import { electronFloors, electronStatus, roomPath, type ElectronStatus } from "@/lib/electron";
+import { electronFloors, electronStatus, roomPath, type ElectronRoom, type ElectronStatus } from "@/lib/electron";
 import {
   electronDeltas,
   electronFacts,
   electronMoves,
   electronSeries,
+  electronShifts,
+  electronFlipFlops,
   electronSnapshotAt,
   electronSnapshots,
   paintElectronRoom,
+  planRoomFor,
   prettySchemeDate,
   qiForDate,
   type ElectronKind,
@@ -31,6 +34,40 @@ const KIND_LABEL: Record<ElectronKind, string> = {
   storage: "Склад",
 };
 
+const EDIT_KEY = "prorent-electron-plan-edits";
+
+type ElectronEdit = {
+  status?: ElectronStatus;
+  name?: string;
+  area?: number;
+  note?: string;
+};
+
+function readEdits(): Record<string, ElectronEdit> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(EDIT_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as Record<string, ElectronEdit>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function withEdit(room: ElectronRoom, edit: ElectronEdit | undefined): ElectronRoom {
+  if (!edit) return room;
+  return {
+    ...room,
+    status: edit.status ?? room.status,
+    name: edit.name ?? room.name,
+    area: typeof edit.area === "number" ? edit.area : room.area,
+    note: edit.note ?? room.note,
+    sheetId: room.id,
+    layout: "same",
+  };
+}
+
 function ElectronPage() {
   const qi = usePortfolio((state) => state.qi);
   const setQi = usePortfolio((state) => state.setQi);
@@ -41,6 +78,8 @@ function ElectronPage() {
   const facts = electronFacts(snapshot);
   const history = useMemo(() => electronDeltas(), []);
   const mix = useMemo(() => electronSeries(), []);
+  const shifts = useMemo(() => electronShifts(), []);
+  const flips = useMemo(() => electronFlipFlops(), []);
   const moves = useMemo(() => (snapshot ? electronMoves(snapshot.date) : []), [snapshot]);
   const levels = useMemo(() => levelRows(snapshot), [snapshot]);
   const [level, setLevel] = useState(1);
@@ -48,23 +87,43 @@ function ElectronPage() {
   const [status, setStatus] = useState<ElectronStatus | "all">("all");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>("1.01");
+  const [editor, setEditor] = useState(false);
+  const [edits, setEdits] = useState<Record<string, ElectronEdit>>({});
+  const [editsReady, setEditsReady] = useState(false);
+  const [undo, setUndo] = useState<Record<string, ElectronEdit>[]>([]);
+  const focusEdits = useRef(edits);
 
-  const floors = useMemo(
-    () =>
-      electronFloors.map((item) => ({
+  useEffect(() => {
+    setEdits(readEdits());
+    setEditsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!editsReady) return;
+    window.localStorage.setItem(EDIT_KEY, JSON.stringify(edits));
+  }, [edits, editsReady]);
+
+  const floors = useMemo(() => {
+    if (editor) {
+      return electronFloors.map((item) => ({
         ...item,
-        rooms: item.rooms.map((room) => paintElectronRoom(room, snapshot)),
-      })),
-    [snapshot],
-  );
+        rooms: item.rooms.map((room) => withEdit(room, edits[room.id])),
+      }));
+    }
+    return electronFloors.map((item) => ({
+      ...item,
+      rooms: item.rooms.map((room) => paintElectronRoom(room, snapshot)),
+    }));
+  }, [editor, edits, snapshot]);
   const floor = floors.find((item) => item.number === level) ?? floors[0];
   const floorRooms = snapshot?.rooms.filter((room) => room.floor === floor.number) ?? [];
   const floorArea = floorRooms.reduce((sum, room) => sum + room.area, 0);
   const floorVacant = floorRooms.filter((room) => room.kind === "vacant").reduce((sum, room) => sum + room.area, 0);
+  const sheetOnly = snapshot?.rooms.filter((room) => room.floor === floor.number && !planRoomFor(room)) ?? [];
   const visible = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase("ru");
     return floor.rooms.filter((room) => {
-      const matchesStatus = status === "all" || room.status === status;
+      const matchesStatus = status === "all" || (room.layout !== "missing" && room.status === status);
       const haystack = `${room.id} ${room.legacy} ${room.name} ${room.note}`.toLocaleLowerCase("ru");
       return matchesStatus && (!needle || haystack.includes(needle));
     });
@@ -78,6 +137,29 @@ function ElectronPage() {
     setQi(next);
   };
 
+  const remember = () => setUndo((stack) => [...stack.slice(-30), edits]);
+  const patchRoom = (id: string, patch: ElectronEdit) => {
+    setEdits((current) => ({ ...current, [id]: { ...current[id], ...patch } }));
+  };
+  const undoEdit = () => {
+    const previous = undo.at(-1);
+    if (!previous) return;
+    setUndo((stack) => stack.slice(0, -1));
+    setEdits(previous);
+  };
+  const resetRoom = (id: string) => {
+    remember();
+    setEdits((current) => {
+      const next = { ...current };
+      delete next[id];
+      return next;
+    });
+  };
+  const keepTextUndo = () => {
+    if (JSON.stringify(focusEdits.current) === JSON.stringify(edits)) return;
+    setUndo((stack) => [...stack.slice(-30), focusEdits.current]);
+  };
+
   if (!floor) return null;
 
   return (
@@ -89,9 +171,9 @@ function ElectronPage() {
           </p>
           <h1 className="mt-2 font-display text-4xl sm:text-5xl">ТЦ «Электрон»</h1>
           <p className="mt-3 max-w-2xl text-ink-soft">
-            ул. Рабочая. Площади с листов ЦФ-3.2, с 30 ноября 2022 по 20 июля 2026. Ранние подписи 1.xx стоят не на тех
-            контурах, что сейчас: серия идёт по очертанию, а старый номер (230, 230а, 250) остаётся рядом. Лента внизу
-            экрана листает и этот объект. В европейский rent roll рубли не попадают.
+            ул. Рабочая. Площади с листов ЦФ-3.2, с 30 ноября 2022 по 20 июля 2026. Номера не сидели на одном месте:
+            зал 479 был 1.12, потом переехал на 1.10, а старые 1.05, 1.06, 1.07 и 1.11 после перепланировки сели на другие
+            контуры. Контуры на экране — схема 20.07.2026. Лента листает и этот объект. В европейский rent roll он не входит.
           </p>
           <Link to="/brand-hall" className="mt-4 inline-block text-sm text-copper">
             К Брэнд Холлу
@@ -125,7 +207,7 @@ function ElectronPage() {
         <Stat
           label="Склад"
           value={snapshot ? `${fine(facts.storage)} м²` : "—"}
-          note={snapshot ? "жёлтый склад DNS с листа 20.07.2026" : "жёлтые зоны"}
+          note={snapshot ? "жёлтые зоны на открытом листе" : "жёлтые зоны"}
         />
       </section>
 
@@ -167,6 +249,30 @@ function ElectronPage() {
         </div>
       </section>
 
+      <section className="panel p-4 sm:p-5">
+        <h2 className="font-display text-2xl">Номера ездили</h2>
+        <p className="mt-1 text-sm text-stone">
+          Один номер — не одно место. Между листами подпись переезжала на другой контур, иногда туда и обратно по цвету.
+        </p>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+          {shifts.map((shift) => (
+            <li key={shift.id} className="border-t border-line pt-3 text-sm">
+              <p className="font-display text-xl">{shift.id}</p>
+              <p className="text-stone">
+                {shift.stops
+                  .map((stop) => `${stop.place} ${fine(stop.area)} м², ${prettySchemeDate(stop.from)}–${prettySchemeDate(stop.to)}`)
+                  .join(" → ")}
+              </p>
+            </li>
+          ))}
+        </ul>
+        {flips.length > 0 ? (
+          <p className="mt-4 text-sm text-stone">
+            Без смены места то занимали, то снова освобождали: {flips.join(", ")}.
+          </p>
+        ) : null}
+      </section>
+
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-1">
           {floors.map((item) => (
@@ -191,8 +297,24 @@ function ElectronPage() {
           <button type="button" className={mode === "2d" ? "btn" : "btn btn-ghost"} onClick={() => setMode("2d")}>
             2D
           </button>
+          <button type="button" className={editor ? "btn" : "btn btn-ghost"} onClick={() => setEditor((value) => !value)}>
+            Редактор
+          </button>
         </div>
       </div>
+
+      {editor ? (
+        <p className="panel px-4 py-3 text-sm text-ink-soft">
+          Редактор открыт на стенах 20.07.2026. Контур не двигается: меняются цвет, название и цифра площади.
+          Листы истории не переписываются. Правки остаются в этом браузере.
+        </p>
+      ) : snapshot && snapshot.date < "2026-07-20" ? (
+        <p className="panel px-4 py-3 text-sm text-ink-soft">
+          На экране стены схемы 20.07.2026, они не пересобираются. История меняет только цвет и подпись площадей.
+          Лист {prettySchemeDate(snapshot.date)} нарисован иначе
+          {snapshot.note ? `: ${snapshot.note}` : "."} Мелкие помещения, которых на сегодняшнем плане уже нет, остаются списком и в графике, без отдельных стен.
+        </p>
+      ) : null}
 
       <div className="flex flex-wrap items-end gap-3">
         <label className="text-sm text-stone">
@@ -269,9 +391,90 @@ function ElectronPage() {
                 {selected.area > 0 ? fine(selected.area) : "—"}
                 <span className="ml-2 font-sans text-base text-stone">м²</span>
               </p>
-              <p className="text-sm">{electronStatus[selected.status].label}</p>
-              {selected.note && <p className="text-sm text-stone">{selected.note}</p>}
-              <p className="text-sm text-stone">Название арендатора — с книги 20.07.2026. Площадь и цвет — с открытого листа.</p>
+              <p className="text-sm">
+                {selected.layout === "missing" ? "На этом листе помещения нет" : electronStatus[selected.status].label}
+              </p>
+              {editor ? (
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-2">
+                    {(Object.keys(electronStatus) as ElectronStatus[]).map((key) => (
+                      <button
+                        key={key}
+                        type="button"
+                        className={selected.status === key ? "btn" : "btn btn-ghost"}
+                        onClick={() => {
+                          remember();
+                          patchRoom(selected.id, { status: key });
+                        }}
+                      >
+                        {electronStatus[key].label}
+                      </button>
+                    ))}
+                  </div>
+                  <label className="text-sm text-stone">
+                    Название
+                    <input
+                      value={selected.name}
+                      onFocus={() => {
+                        focusEdits.current = edits;
+                      }}
+                      onChange={(event) => patchRoom(selected.id, { name: event.target.value })}
+                      onBlur={keepTextUndo}
+                      className="mt-1 block w-full border border-line bg-paper px-3 py-2 text-ink"
+                    />
+                  </label>
+                  <label className="text-sm text-stone">
+                    Площадь, м²
+                    <input
+                      type="number"
+                      min={0}
+                      step="0.01"
+                      value={selected.area}
+                      onFocus={() => {
+                        focusEdits.current = edits;
+                      }}
+                      onChange={(event) => {
+                        const area = Number(event.target.value);
+                        if (Number.isFinite(area)) patchRoom(selected.id, { area });
+                      }}
+                      onBlur={keepTextUndo}
+                      className="nums mt-1 block w-full border border-line bg-paper px-3 py-2 text-ink"
+                    />
+                  </label>
+                  <label className="text-sm text-stone">
+                    Заметка
+                    <input
+                      value={edits[selected.id]?.note ?? selected.note}
+                      onFocus={() => {
+                        focusEdits.current = edits;
+                      }}
+                      onChange={(event) => patchRoom(selected.id, { note: event.target.value })}
+                      onBlur={keepTextUndo}
+                      className="mt-1 block w-full border border-line bg-paper px-3 py-2 text-ink"
+                    />
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    <button type="button" className="btn btn-ghost" onClick={undoEdit} disabled={undo.length === 0}>
+                      Шаг назад
+                    </button>
+                    <button type="button" className="btn btn-ghost" onClick={() => resetRoom(selected.id)} disabled={!edits[selected.id]}>
+                      Вернуть помещение
+                    </button>
+                    <button type="button" className="btn btn-ghost" onClick={() => { remember(); setEdits({}); }} disabled={Object.keys(edits).length === 0}>
+                      Сбросить правки
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {selected.note && <p className="text-sm text-stone">{selected.note}</p>}
+                  <p className="text-sm text-stone">
+                    {selected.layout === "missing"
+                      ? "Контур есть только на схеме 20.07.2026."
+                      : "Название — с книги 20.07.2026. Площадь и цвет — с открытого листа."}
+                  </p>
+                </>
+              )}
             </>
           ) : (
             <p className="text-stone">Ничего не найдено.</p>
@@ -285,15 +488,34 @@ function ElectronPage() {
                   onClick={() => setSelectedId(room.id)}
                 >
                   <span>
+                    {room.sheetId && room.sheetId !== room.id ? `${room.sheetId} → ` : ""}
                     {room.id}
                     {room.legacy ? ` · ${room.legacy}` : ""} {room.name}
-                    <span className="mt-0.5 block text-xs text-stone">{electronStatus[room.status].label}</span>
+                    <span className="mt-0.5 block text-xs text-stone">
+                      {room.layout === "missing" ? "Нет на этом листе" : electronStatus[room.status].label}
+                    </span>
                   </span>
                   <span className="nums">{room.area > 0 ? fine(room.area) : "—"}</span>
                 </button>
               </li>
             ))}
           </ul>
+          {sheetOnly.length > 0 ? (
+            <div>
+              <p className="kicker">Были на листе, контура уже нет</p>
+              <ul className="mt-2 max-h-48 overflow-auto">
+                {sheetOnly.map((room) => (
+                  <li key={`${room.floor}-${room.id}`} className="flex items-baseline justify-between gap-3 border-b border-line py-2 text-sm">
+                    <span>
+                      {room.id}
+                      <span className="mt-0.5 block text-xs text-stone">{KIND_LABEL[room.kind]}</span>
+                    </span>
+                    <span className="nums">{fine(room.area)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </aside>
       </section>
 
@@ -306,7 +528,7 @@ function ElectronPage() {
               {quarterSnap && snapshot && quarterSnap.date !== snapshot.date
                 ? ` — сейчас открыт более ранний, на срезе ленты ${prettySchemeDate(quarterSnap.date)}`
                 : ""}
-              . Номер на старом листе может не совпадать с нынешним 1.xx: в таблице это один и тот же контур.
+              . Номер в таблице — как напечатано на листе, а не как на сегодняшних стенах.
               {snapshot?.note ? ` ${snapshot.note}` : ""}
             </span>
           </caption>
@@ -357,14 +579,11 @@ function ElectronPage() {
           <ul className="mt-3 grid gap-2 sm:grid-cols-2">
             {moves.map((move) => (
               <li key={move.id} className="border-t border-line pt-2 text-sm">
-                <p>
-                  {move.id}
-                  {move.sheetId && move.sheetId !== move.id ? ` · на листе ${move.sheetId}` : ""}
-                </p>
+                <p>{move.label}</p>
                 <p className="text-stone">
-                  {move.from ? KIND_LABEL[move.from] : "новое"} → {KIND_LABEL[move.to]}
-                  {" · "}
-                  {move.areaFrom === null ? "—" : `${fine(move.areaFrom)} м²`} → {move.areaTo === null ? "—" : `${fine(move.areaTo)} м²`}
+                  {move.to === null
+                    ? `убрали с листа · было ${move.areaFrom === null ? "—" : `${fine(move.areaFrom)} м²`}`
+                    : `${move.from ? KIND_LABEL[move.from] : "появилось"} → ${KIND_LABEL[move.to]} · ${move.areaFrom === null ? "—" : `${fine(move.areaFrom)} м²`} → ${move.areaTo === null ? "—" : `${fine(move.areaTo)} м²`}`}
                 </p>
               </li>
             ))}

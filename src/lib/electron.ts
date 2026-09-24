@@ -14,6 +14,8 @@ export type ElectronRoom = {
   shapes: Pt[][];
   label: Pt;
   note: string;
+  sheetId?: string;
+  layout?: "same" | "moved" | "missing";
 };
 
 export type ElectronFloor = {

@@ -60,15 +60,20 @@ export default function BrandHall3D({ floor, rooms, selectedId, onSelect }: Prop
   const hostRef = useRef<HTMLDivElement>(null);
   const resetRef = useRef<(() => void) | null>(null);
   const refreshRef = useRef<(() => void) | null>(null);
+  const paintRef = useRef<(() => void) | null>(null);
   const selectedRef = useRef(selectedId);
   const onSelectRef = useRef(onSelect);
+  const floorRef = useRef(floor);
+  const visibleKeyRef = useRef("");
   const [ready, setReady] = useState(false);
 
   selectedRef.current = selectedId;
   onSelectRef.current = onSelect;
-
+  floorRef.current = floor;
   const visibleKey = useMemo(() => rooms.map((room) => room.id).sort().join("|"), [rooms]);
-  const geometryKey = useMemo(() => `${floor.name}:${floor.rooms.map((room) => `${room.id}:${room.shape}:${room.kind}`).join("|")}`, [floor]);
+  visibleKeyRef.current = visibleKey;
+  const geometryKey = useMemo(() => `${floor.name}:${floor.rooms.map((room) => `${room.id}:${room.shape}`).join("|")}`, [floor]);
+  const colorKey = floor.rooms.map((room) => `${room.id}:${room.kind}:${room.area ?? ""}`).join("|");
 
   useEffect(() => {
     const host = hostRef.current;
@@ -406,7 +411,7 @@ export default function BrandHall3D({ floor, rooms, selectedId, onSelect }: Prop
       mesh.receiveShadow = true;
       mesh.userData.roomId = room.id;
       world.add(mesh);
-      if (visible) interactive.push(mesh);
+      interactive.push(mesh);
 
       const outline = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({ color: visible ? 0x52616a : 0xaab0b3, transparent: true, opacity: visible ? 0.75 : 0.18 }));
       outline.position.y = 0.045;
@@ -481,6 +486,43 @@ export default function BrandHall3D({ floor, rooms, selectedId, onSelect }: Prop
       addBox(frontSegment, wallHeight, wallThickness, center.x + (doorway + frontSegment) / 2, wallHeight / 2, center.z + depth / 2, wallMaterial);
     });
 
+    const repaint = () => {
+      const plan = floorRef.current;
+      const visibleIdsNow = new Set(visibleKeyRef.current.split("|").filter(Boolean));
+      const byId = new Map(plan.rooms.map((room) => [room.id, room]));
+      roomVisuals.forEach((visual, id) => {
+        const room = byId.get(id);
+        if (!room) return;
+        const shown = visibleIdsNow.has(id);
+        const color = plan.parking ? 0x596267 : kindMeta[room.kind].threeColor;
+        visual.visible = shown;
+        visual.material.color.set(shown ? color : 0xaeb5b8);
+        visual.material.emissive.set(color);
+        visual.material.transparent = !shown;
+        visual.material.opacity = shown ? 0.92 : 0.16;
+        visual.material.depthWrite = shown;
+        const lineMaterial = visual.outline.material as THREE.LineBasicMaterial;
+        lineMaterial.color.set(shown ? 0x52616a : 0xaab0b3);
+        lineMaterial.opacity = shown ? 0.75 : 0.18;
+        if (visual.label) {
+          world.remove(visual.label);
+          visual.label.material.map?.dispose();
+          visual.label.material.dispose();
+          visual.label = null;
+        }
+        if (shown && !plan.parking) {
+          const label = createLabel(room);
+          if (label) {
+            const labelPoint = toWorld(room.labelX, room.labelY);
+            label.position.set(labelPoint.x, 3.18, labelPoint.z);
+            world.add(label);
+            visual.label = label;
+          }
+        }
+      });
+    };
+    paintRef.current = repaint;
+
     const refresh = () => {
       roomVisuals.forEach((visual, id) => {
         const active = id === selectedRef.current && visual.visible;
@@ -525,7 +567,7 @@ export default function BrandHall3D({ floor, rooms, selectedId, onSelect }: Prop
       pointer.x = (event.clientX - bounds.left) / bounds.width * 2 - 1;
       pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      return raycaster.intersectObjects(interactive, false)[0];
+      return raycaster.intersectObjects(interactive, false).find((item) => visibleKeyRef.current.split("|").includes(item.object.userData.roomId as string));
     };
     const handleMove = (event: PointerEvent) => { renderer.domElement.style.cursor = updatePointer(event) ? "pointer" : "grab"; };
     const handleClick = (event: PointerEvent) => {
@@ -565,10 +607,12 @@ export default function BrandHall3D({ floor, rooms, selectedId, onSelect }: Prop
       renderer.dispose();
       renderer.domElement.remove();
       refreshRef.current = null;
+      paintRef.current = null;
       resetRef.current = null;
     };
-  }, [floor, geometryKey, visibleKey]);
+  }, [geometryKey]);
 
+  useEffect(() => { paintRef.current?.(); refreshRef.current?.(); }, [colorKey, visibleKey]);
   useEffect(() => { refreshRef.current?.(); }, [selectedId]);
 
   return <div ref={hostRef} className={`three-floor-stage brand-three-stage ${ready ? "ready" : ""}`}>

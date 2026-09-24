@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { kindMeta } from "@/lib/brand-hall";
 import { brandSnapshotAt, type BrandSnapshot } from "@/lib/brand-history";
 import { electronFloors } from "@/lib/electron";
-import { electronSnapshotAt, type ElectronSnapshot } from "@/lib/electron-history";
+import { electronSnapshotAt, planRoomFor, type ElectronSnapshot } from "@/lib/electron-history";
 import { m2 } from "@/lib/format";
 import { isHeld, isLeased, zoneArea } from "@/lib/portfolio";
 import { pioneerFloors, pioneerRooms, pioneerStatus } from "@/lib/pioneer";
@@ -214,11 +214,11 @@ function electronRows(snapshot: ElectronSnapshot | null): Row[] {
         label: `Электрон · ${floor.name}`,
         area: rooms.reduce((sum, room) => sum + room.area, 0),
         cells: rooms.map((room) => {
-          const known = floor.rooms.find((item) => item.id === room.id);
+          const known = planRoomFor(room);
           return {
-            id: room.id,
-            name: `${room.id}${known?.legacy ? ` · ${known.legacy}` : ""}`,
-            tenant: room.kind === "vacant" ? "Свободно" : (known?.name ?? room.id),
+            id: `${room.floor}-${room.id}`,
+            name: known && known.id !== room.id ? `${room.id} → ${known.id}` : room.id,
+            tenant: room.kind === "vacant" ? "Свободно" : room.kind === "storage" ? "Склад" : (known?.name ?? "Помещение листа"),
             area: room.area,
             tone: (room.kind === "vacant" ? "vacant" : "leased") as Tone,
             note: room.kind === "storage" ? "Склад" : room.kind === "vacant" ? "Вакантно" : "Торговля",
