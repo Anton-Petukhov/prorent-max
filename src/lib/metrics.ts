@@ -1,3 +1,4 @@
+import { brandFacts, brandSnapshotAt, brandSnapshots, prettySchemeDate, qiForDate } from "@/lib/brand-history";
 import { QUARTERS, quarterIndex } from "@/lib/quarters";
 import {
   isHeld,
@@ -45,9 +46,9 @@ function isCommercial(use: UseKind): boolean {
   return use === "office" || use === "retail";
 }
 
-export function metricsAt(assets: Asset[], qi: number): Metrics {
+export function metricsAt(assets: Asset[], qi: number, includeArchive = true): Metrics {
   const held = assets.filter((asset) => isHeld(asset, qi));
-  if (held.length === 0) return { ...EMPTY };
+  const archive = includeArchive ? brandFacts(brandSnapshotAt(qi)) : null;
 
   let total = 0;
   let vacant = 0;
@@ -93,21 +94,24 @@ export function metricsAt(assets: Asset[], qi: number): Metrics {
     }
   }
 
-  const occupied = total - vacant;
+  const grandVacant = vacant + (archive?.vacant ?? 0);
+  const grandTotal = total + (archive?.total ?? 0);
+  const archiveAssets = archive && archive.total > 0 ? 1 : 0;
+  if (held.length === 0 && archiveAssets === 0) return { ...EMPTY };
   return {
-    total,
-    vacant,
-    commercial,
-    warehouse,
-    commercialVacant,
+    total: grandTotal,
+    vacant: grandVacant,
+    commercial: commercial + (archive?.commercial ?? 0),
+    warehouse: warehouse + (archive?.storage ?? 0),
+    commercialVacant: commercialVacant + (archive?.vacant ?? 0),
     warehouseVacant,
-    shell,
-    occupied,
-    occupancy: total > 0 ? (occupied / total) * 100 : 0,
+    shell: shell + (archive?.service ?? 0),
+    occupied: grandTotal - grandVacant,
+    occupancy: grandTotal > 0 ? ((grandTotal - grandVacant) / grandTotal) * 100 : 0,
     rentPerM2: rentArea > 0 ? rentWeighted / rentArea : 0,
     rentRoll,
     wault: rentRoll > 0 ? waultNum / rentRoll : 0,
-    assets: held.length,
+    assets: held.length + archiveAssets,
   };
 }
 
@@ -121,9 +125,9 @@ export type SeriesPoint = {
   rent: number;
 };
 
-export function series(assets: Asset[]): SeriesPoint[] {
+export function series(assets: Asset[], includeArchive = true): SeriesPoint[] {
   return QUARTERS.map((label, qi) => {
-    const metrics = metricsAt(assets, qi);
+    const metrics = metricsAt(assets, qi, includeArchive);
     return {
       label,
       commercial: metrics.commercial - metrics.commercialVacant,
@@ -151,7 +155,7 @@ export function assetSnaps(assets: Asset[], qi: number): AssetSnap[] {
   return assets
     .filter((asset) => isHeld(asset, qi))
     .map((asset) => {
-      const metrics = metricsAt([asset], qi);
+      const metrics = metricsAt([asset], qi, false);
       return {
         asset,
         total: metrics.total,
@@ -203,7 +207,7 @@ export function cityRows(assets: Asset[], qi: number): CityRow[] {
     row.rentWeighted += snap.rent * occupied;
     map.set(key, row);
   }
-  return [...map.values()]
+  const rows = [...map.values()]
     .map((row) => ({
       city: row.city,
       country: row.country,
@@ -213,8 +217,21 @@ export function cityRows(assets: Asset[], qi: number): CityRow[] {
       commercial: row.commercial,
       warehouse: row.warehouse,
       rent: row.rentArea > 0 ? row.rentWeighted / row.rentArea : 0,
-    }))
-    .sort((a, b) => b.total - a.total);
+    }));
+  const archive = brandFacts(brandSnapshotAt(qi));
+  if (archive.total > 0) {
+    rows.push({
+      city: "Иркутск",
+      country: "Россия",
+      count: 1,
+      total: archive.total,
+      vacant: archive.vacant,
+      commercial: archive.commercial,
+      warehouse: archive.storage,
+      rent: 0,
+    });
+  }
+  return rows.sort((a, b) => b.total - a.total);
 }
 
 export function expiryBuckets(assets: Asset[], qi: number): { label: string; area: number }[] {
@@ -251,10 +268,21 @@ export function vacancyHeat(assets: Asset[]): HeatCell[] {
         cells.push({ assetId: asset.id, name: asset.name, city: asset.city, year, rate: null });
         continue;
       }
-      const metrics = metricsAt([asset], qi);
+      const metrics = metricsAt([asset], qi, false);
       const rate = metrics.total > 0 ? (metrics.vacant / metrics.total) * 100 : 0;
       cells.push({ assetId: asset.id, name: asset.name, city: asset.city, year, rate });
     }
+  }
+  for (const year of years) {
+    const qi = QUARTERS.indexOf(`${year}-Q3`);
+    const facts = brandFacts(brandSnapshotAt(qi));
+    cells.push({
+      assetId: "brand-hall",
+      name: "ТД «Брэнд Холл»",
+      city: "Иркутск",
+      year,
+      rate: facts.total > 0 ? (facts.vacant / facts.total) * 100 : null,
+    });
   }
   return cells;
 }
@@ -285,7 +313,32 @@ export function eventsBetween(assets: Asset[], from: number, to: number): LeaseE
       }
     }
   }
-  return events.sort((a, b) => a.qi - b.qi || a.title.localeCompare(b.title, "ru"));
+  return events.concat(brandArchiveEvents(from, to)).sort((a, b) => a.qi - b.qi || a.title.localeCompare(b.title, "ru"));
+}
+
+function brandArchiveEvents(from: number, to: number): LeaseEvent[] {
+  const grouped = new Map<number, (typeof brandSnapshots)[number][]>();
+  for (const snapshot of brandSnapshots) {
+    const qi = qiForDate(snapshot.date);
+    if (qi < from || qi > to) continue;
+    const list = grouped.get(qi) ?? [];
+    list.push(snapshot);
+    grouped.set(qi, list);
+  }
+  const events: LeaseEvent[] = [];
+  for (const [qi, list] of grouped) {
+    const latest = list[list.length - 1];
+    if (!latest) continue;
+    const facts = brandFacts(latest);
+    const extra = list.length > 1 ? ` · листов в квартале: ${list.length}` : "";
+    events.push({
+      qi,
+      tone: "enter",
+      title: "Брэнд Холл",
+      detail: `Схема ${prettySchemeDate(latest.stamp ?? latest.date)} · ${Math.round(facts.total)} м², вакант ${Math.round(facts.vacant)}${extra}`,
+    });
+  }
+  return events;
 }
 
 function pushEdge(
@@ -309,7 +362,7 @@ function pushEdge(
 }
 
 export function watchlist(assets: Asset[], qi: number) {
-  const metrics = metricsAt(assets, qi);
+  const book = metricsAt(assets, qi, false);
   let zones = 0;
   let vacantZones = 0;
   for (const asset of assets) {
@@ -324,7 +377,7 @@ export function watchlist(assets: Asset[], qi: number) {
   }
   const upcoming = eventsBetween(assets, qi, Math.min(QUARTERS.length - 1, qi + 3));
   return {
-    loss: metrics.vacant * metrics.rentPerM2,
+    loss: book.vacant * book.rentPerM2,
     zones,
     vacantZones,
     endings: upcoming.filter((event) => event.tone === "end").slice(0, 4),

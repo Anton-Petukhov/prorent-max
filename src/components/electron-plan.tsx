@@ -2,10 +2,45 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { deriveWalls, type ElectronFloor } from "@/lib/electron";
+import { deriveWalls, electronStatus, type ElectronFloor, type ElectronRoom } from "@/lib/electron";
 
 const WALL_H = 2.55 * 0.8;
 const GLASS_H = 2.34 * 0.8;
+
+function createLabel(room: ElectronRoom) {
+  if (room.area <= 0) return null;
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 176;
+  const context = canvas.getContext("2d");
+  if (!context) return null;
+  const title = `${room.id} · ${room.name}`;
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = `${electronStatus[room.status].color}ed`;
+  context.strokeStyle = "rgba(31,43,53,.22)";
+  context.lineWidth = 4;
+  context.beginPath();
+  context.roundRect(8, 8, 496, 160, 24);
+  context.fill();
+  context.stroke();
+  context.textAlign = "center";
+  context.fillStyle = "#1f2a30";
+  context.font = title.length > 18 ? "800 28px Arial" : "800 40px Arial";
+  context.fillText(title, 256, 72);
+  context.fillStyle = "rgba(31,42,48,.78)";
+  context.font = "750 30px Arial";
+  context.fillText(`${room.area.toLocaleString("ru-RU", { maximumFractionDigits: 2 })} м²`, 256, 124);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(2.75, 0.96, 1);
+  sprite.renderOrder = 30;
+  sprite.userData.roomId = room.id;
+  return sprite;
+}
 
 type Props = {
   floor: ElectronFloor;
@@ -127,8 +162,15 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
     }
 
     const hits: THREE.Mesh[] = [];
+    const labels = new Map<string, THREE.Sprite>();
     const outlines = new Map<string, THREE.LineLoop>();
     for (const room of floor.rooms) {
+      const label = createLabel(room);
+      if (label) {
+        label.position.set((room.label[0] - originX) * scale, WALL_H + 0.7, (room.label[1] - originY) * scale);
+        scene.add(label);
+        labels.set(room.id, label);
+      }
       for (const ring of room.shapes) {
         const shape = toShape(ring);
         if (!shape) continue;
@@ -169,6 +211,11 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
         material.color.set(active ? 0xc0562a : 0xffffff);
         const outline = outlines.get(id);
         if (outline) outline.visible = active;
+        const label = labels.get(id);
+        if (label) {
+          label.visible = shown;
+          label.scale.set(active ? 3.04 : 2.75, active ? 1.07 : 0.96, 1);
+        }
       }
     };
     refreshRef.current = refresh;
@@ -186,7 +233,7 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
       pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
       pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(hits).find((item) => visibleRef.current.includes(item.object.userData.roomId as string));
+      const hit = raycaster.intersectObjects([...hits, ...labels.values()]).find((item) => visibleRef.current.includes(item.object.userData.roomId as string));
       const id = hit?.object.userData.roomId as string | undefined;
       if (id) onSelectRef.current(id);
     };
@@ -221,6 +268,11 @@ export default function ElectronPlan({ floor, selectedId, visibleIds, onSelect }
       controls.dispose();
       texture?.dispose();
       scene.traverse((object) => {
+        if (object instanceof THREE.Sprite) {
+          object.material.map?.dispose();
+          object.material.dispose();
+          return;
+        }
         if (object instanceof THREE.Mesh || object instanceof THREE.LineLoop) {
           object.geometry.dispose();
           const materials = Array.isArray(object.material) ? object.material : [object.material];

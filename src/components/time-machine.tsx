@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Pause, Play } from "lucide-react";
+import { brandFacts, brandSnapshotAt, prettySchemeDate } from "@/lib/brand-history";
+import { electronFacts, electronSnapshotAt } from "@/lib/electron-history";
 import { eventsBetween } from "@/lib/metrics";
 import { QUARTERS, quarterPretty } from "@/lib/quarters";
 import { usePortfolio, useResolvedAssets } from "@/lib/store";
@@ -13,7 +15,19 @@ export function TimeMachine() {
   const setPlaying = usePortfolio((state) => state.setPlaying);
   const assets = useResolvedAssets();
   const label = QUARTERS[qi] ?? "2026-Q3";
-  const here = eventsBetween(assets, qi, qi).slice(0, 2);
+  const here = eventsBetween(assets, qi, qi)
+    .filter((event) => event.title !== "Брэнд Холл")
+    .slice(0, 2);
+  const scheme = brandSnapshotAt(qi);
+  const schemeFacts = brandFacts(scheme);
+  const schemeLine = scheme
+    ? `Брэнд Холл · схема ${prettySchemeDate(scheme.stamp ?? scheme.date)} · ${Math.round(schemeFacts.total)} м², вакант ${Math.round(schemeFacts.vacant)}`
+    : null;
+  const electron = electronSnapshotAt(qi);
+  const electronLine = electron
+    ? `Электрон · ${prettySchemeDate(electron.date)} · вакант ${Math.round(electronFacts(electron).vacant)}`
+    : null;
+  const dock = [schemeLine, electronLine, ...here.map((event) => event.detail)].filter(Boolean).join("  ·  ");
 
   useEffect(() => {
     if (!playing) return;
@@ -78,9 +92,7 @@ export function TimeMachine() {
             })}
           </div>
           <p className="hidden min-w-0 flex-1 truncate text-xs text-vacant sm:block">
-            {here.length
-              ? here.map((event) => event.detail).join("  ·  ")
-              : "В этом квартале без новых стартов и окончаний"}
+            {dock || "В этом квартале без новых стартов и окончаний"}
           </p>
         </div>
       </div>

@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import PioneerPlan from "@/components/pioneer-plan";
+import { DonutMix, StackBars } from "@/components/charts";
+import { pct } from "@/lib/format";
 import { pioneerFloors, pioneerRooms, pioneerStatus, pioneerTotals, type PioneerRoom } from "@/lib/pioneer";
+import { theme } from "@/lib/theme";
 
 export const Route = createFileRoute("/pioneer")({ component: PioneerPage });
 
@@ -37,6 +40,36 @@ function PioneerPage() {
         <Stat label="Арендовано" value={`${fine(totals.occupied)} м²`} note={`${totals.occupancy.toFixed(1)}%`} />
         <Stat label="Свободно" value={`${fine(totals.vacant)} м²`} note="Торговое 1 и Офис 201" />
         <Stat label="Бронь" value={`${fine(totals.reserved)} м²`} note="Coffee Lab · Офис 202" />
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2">
+        <div className="panel p-4 sm:p-5">
+          <h2 className="font-display text-2xl">Смесь на срезе</h2>
+          <p className="mb-2 text-sm text-stone">Одна книга галереи, без квартальной переписи.</p>
+          <DonutMix
+            slices={[
+              { name: "Арендовано", value: totals.occupied, fill: theme.copper },
+              { name: "Бронь", value: totals.reserved, fill: theme.pine },
+              { name: "Свободно", value: totals.vacant, fill: theme.vacant },
+            ]}
+            center={pct(totals.occupancy)}
+            caption="занято"
+          />
+        </div>
+        <div className="panel p-4 sm:p-5">
+          <h2 className="font-display text-2xl">По этажам</h2>
+          <StackBars
+            data={pioneerFloors.map((name) => {
+              const stats = pioneerTotals(pioneerRooms.filter((room) => room.floor === name));
+              return { name: name.replace(" этаж", " эт."), leased: stats.occupied, reserved: stats.reserved, vacant: stats.vacant };
+            })}
+            bars={[
+              { key: "leased", name: "Арендовано", fill: theme.copper },
+              { key: "reserved", name: "Бронь", fill: theme.pine },
+              { key: "vacant", name: "Свободно", fill: theme.vacant },
+            ]}
+          />
+        </div>
       </section>
 
       <div className="flex flex-wrap items-center justify-between gap-3">

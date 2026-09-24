@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { brandFloors, kindMeta } from "@/lib/brand-hall";
-import { electronFloors, electronStatus } from "@/lib/electron";
+import { kindMeta } from "@/lib/brand-hall";
+import { brandSnapshotAt, type BrandSnapshot } from "@/lib/brand-history";
+import { electronFloors } from "@/lib/electron";
+import { electronSnapshotAt, type ElectronSnapshot } from "@/lib/electron-history";
 import { m2 } from "@/lib/format";
 import { isHeld, isLeased, zoneArea } from "@/lib/portfolio";
 import { pioneerFloors, pioneerRooms, pioneerStatus } from "@/lib/pioneer";
@@ -41,9 +43,9 @@ function StackPage() {
   const label = QUARTERS[qi] ?? "2026-Q3";
 
   const rows = useMemo<Row[]>(() => {
-    if (book === "brand") return brandRows();
+    if (book === "brand") return brandRows(brandSnapshotAt(qi));
     if (book === "pioneer") return pioneerRows();
-    if (book === "electron") return electronRows();
+    if (book === "electron") return electronRows(electronSnapshotAt(qi));
     const source = assetId === "all" ? held : held.filter((asset) => asset.id === assetId);
     return source.flatMap((asset) =>
       asset.floors.map((floor) => {
@@ -78,11 +80,11 @@ function StackPage() {
   return (
     <div className="flex flex-col gap-6">
       <header>
-        <p className="kicker">Экспозиция · {book === "book" ? quarterPretty(label) : "архив Иркутска"}</p>
+        <p className="kicker">Экспозиция · {book === "pioneer" ? "архив Иркутска" : quarterPretty(label)}</p>
         <h1 className="mt-2 font-display text-4xl sm:text-5xl">Шахматка</h1>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          Этаж — строка, помещение — клетка. Ширина клетки следует площади. Европейская книга слушает машину
-          времени, «Пионер», «Брэнд Холл» и «Электрон» остаются схемами из архива.
+          Этаж — строка, помещение — клетка. Ширина клетки следует площади. Европейская книга, «Брэнд Холл», «Электрон» и
+          лента внизу экрана смотрят в один квартал. «Пионер» остаётся фиксированной схемой.
         </p>
       </header>
 
@@ -179,36 +181,52 @@ function toneClass(tone: Tone): string {
   return "border border-line bg-paper text-ink";
 }
 
-function brandRows(): Row[] {
-  return brandFloors.map((floor) => ({
-    id: floor.name,
-    label: `Брэнд Холл · ${floor.name}`,
-    area: floor.rooms.reduce((sum, room) => sum + (room.included === false ? 0 : (room.area ?? 0)), 0),
-    cells: floor.rooms.map((room) => ({
-      id: room.id,
-      name: room.name,
-      tenant: room.kind === "vacant" ? "Свободно" : kindMeta[room.kind].label,
-      area: room.area ?? 28,
-      tone: room.kind === "vacant" ? "vacant" : room.kind === "service" ? "service" : "leased",
-      note: room.area === null ? "площадь не указана" : kindMeta[room.kind].label,
-    })),
-  }));
+function brandRows(snapshot: BrandSnapshot | null): Row[] {
+  if (!snapshot) return [];
+  const order = ["Подвал", "1 этаж", "2 этаж", "3 этаж", "Мансарда"];
+  return order
+    .map((name) => {
+      const rooms = snapshot.rooms.filter((room) => room.floor === name && room.id !== "3.04А" && room.area);
+      return {
+        id: name,
+        label: `Брэнд Холл · ${name}`,
+        area: rooms.reduce((sum, room) => sum + (room.area ?? 0), 0),
+        cells: rooms.map((room) => ({
+          id: `${name}-${room.id}`,
+          name: room.id,
+          tenant: room.kind === "vacant" ? "Свободно" : kindMeta[room.kind].label,
+          area: room.area ?? 0,
+          tone: (room.kind === "vacant" ? "vacant" : room.kind === "service" ? "service" : "leased") as Tone,
+          note: kindMeta[room.kind].label,
+        })),
+      };
+    })
+    .filter((row) => row.cells.length > 0);
 }
 
-function electronRows(): Row[] {
-  return electronFloors.map((floor) => ({
-    id: `electron-${floor.number}`,
-    label: `Электрон · ${floor.name}`,
-    area: floor.rooms.reduce((sum, room) => sum + room.area, 0),
-    cells: floor.rooms.map((room) => ({
-      id: room.id,
-      name: `${room.id} ${room.name}`,
-      tenant: room.name,
-      area: room.area,
-      tone: room.status === "vacant" ? "vacant" : "leased",
-      note: electronStatus[room.status].label,
-    })),
-  }));
+function electronRows(snapshot: ElectronSnapshot | null): Row[] {
+  if (!snapshot) return [];
+  return electronFloors
+    .map((floor) => {
+      const rooms = snapshot.rooms.filter((room) => room.floor === floor.number);
+      return {
+        id: `electron-${floor.number}`,
+        label: `Электрон · ${floor.name}`,
+        area: rooms.reduce((sum, room) => sum + room.area, 0),
+        cells: rooms.map((room) => {
+          const known = floor.rooms.find((item) => item.id === room.id);
+          return {
+            id: room.id,
+            name: `${room.id}${known?.legacy ? ` · ${known.legacy}` : ""}`,
+            tenant: room.kind === "vacant" ? "Свободно" : (known?.name ?? room.id),
+            area: room.area,
+            tone: (room.kind === "vacant" ? "vacant" : "leased") as Tone,
+            note: room.kind === "storage" ? "Склад" : room.kind === "vacant" ? "Вакантно" : "Торговля",
+          };
+        }),
+      };
+    })
+    .filter((row) => row.cells.length > 0);
 }
 
 function pioneerRows(): Row[] {

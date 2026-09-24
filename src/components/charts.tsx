@@ -53,9 +53,15 @@ function yearTick(value: string): string {
   return value.endsWith("Q1") ? value.slice(0, 4) : "";
 }
 
-export function MixChart({ assets, qi }: { assets: Asset[]; qi: number }) {
-  const data = useMemo(() => series(assets), [assets]);
-  const mark = QUARTERS[qi] ?? data[0]?.label;
+export type MixPoint = {
+  label: string;
+  commercial: number;
+  warehouse: number;
+  vacant: number;
+  occupancy?: number;
+};
+
+export function AreaMix({ data, mark }: { data: MixPoint[]; mark?: string }) {
   return (
     <div className="h-72 w-full min-w-0">
       <ResponsiveContainer width="100%" height="100%">
@@ -111,20 +117,44 @@ export function MixChart({ assets, qi }: { assets: Asset[]; qi: number }) {
   );
 }
 
-export function MixDonut({ assets, qi }: { assets: Asset[]; qi: number }) {
-  const point: SeriesPoint | undefined = series(assets)[qi];
-  const data = [
-    { name: "Коммерция", value: point?.commercial ?? 0, fill: theme.copper },
-    { name: "Склады", value: point?.warehouse ?? 0, fill: theme.pine },
-    { name: "Вакант", value: point?.vacant ?? 0, fill: theme.vacant },
-  ];
-  const occupancy = point?.occupancy ?? 0;
+export function MixChart({
+  assets,
+  qi,
+  includeArchive = true,
+}: {
+  assets: Asset[];
+  qi: number;
+  includeArchive?: boolean;
+}) {
+  const data = useMemo(() => series(assets, includeArchive), [assets, includeArchive]);
+  const mark = QUARTERS[qi] ?? data[0]?.label;
+  return <AreaMix data={data} mark={mark} />;
+}
+
+export function DonutMix({
+  slices,
+  center,
+  caption,
+}: {
+  slices: { name: string; value: number; fill: string }[];
+  center: string;
+  caption: string;
+}) {
+  const drawn = slices.filter((slice) => slice.value > 0);
   return (
     <div className="relative h-64 w-full min-w-0">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <Pie data={data} dataKey="value" nameKey="name" innerRadius="64%" outerRadius="88%" stroke={theme.paper} paddingAngle={1.5}>
-            {data.map((slice) => (
+          <Pie
+            data={drawn.length ? drawn : [{ name: "Нет данных", value: 1, fill: theme.line }]}
+            dataKey="value"
+            nameKey="name"
+            innerRadius="64%"
+            outerRadius="88%"
+            stroke={theme.paper}
+            paddingAngle={drawn.length > 1 ? 1.5 : 0}
+          >
+            {(drawn.length ? drawn : [{ name: "Нет данных", value: 1, fill: theme.line }]).map((slice) => (
               <Cell key={slice.name} fill={slice.fill} />
             ))}
           </Pie>
@@ -132,9 +162,62 @@ export function MixDonut({ assets, qi }: { assets: Asset[]; qi: number }) {
         </PieChart>
       </ResponsiveContainer>
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-        <span className="nums font-display text-4xl text-ink">{pct(occupancy)}</span>
-        <span className="kicker mt-1">занято</span>
+        <span className="nums font-display text-4xl text-ink">{center}</span>
+        <span className="kicker mt-1">{caption}</span>
       </div>
+    </div>
+  );
+}
+
+export function MixDonut({
+  assets,
+  qi,
+  includeArchive = true,
+}: {
+  assets: Asset[];
+  qi: number;
+  includeArchive?: boolean;
+}) {
+  const point: SeriesPoint | undefined = useMemo(() => series(assets, includeArchive)[qi], [assets, includeArchive, qi]);
+  return (
+    <DonutMix
+      slices={[
+        { name: "Коммерция", value: point?.commercial ?? 0, fill: theme.copper },
+        { name: "Склады", value: point?.warehouse ?? 0, fill: theme.pine },
+        { name: "Вакант", value: point?.vacant ?? 0, fill: theme.vacant },
+      ]}
+      center={pct(point?.occupancy ?? 0)}
+      caption="занято"
+    />
+  );
+}
+
+export function StackBars({
+  data,
+  bars,
+}: {
+  data: Record<string, string | number>[];
+  bars: { key: string; name: string; fill: string }[];
+}) {
+  return (
+    <div className="h-72 w-full min-w-0">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+          <CartesianGrid stroke={theme.line} vertical={false} />
+          <XAxis dataKey="name" tick={{ fill: theme.stone, fontSize: 12 }} axisLine={false} tickLine={false} />
+          <YAxis
+            tickFormatter={(value: number) => m2(value)}
+            tick={{ fill: theme.stone, fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+            width={48}
+          />
+          <Tooltip content={<Tip unit="м²" />} />
+          {bars.map((bar) => (
+            <Bar key={bar.key} dataKey={bar.key} name={bar.name} stackId="mix" fill={bar.fill} barSize={28} />
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

@@ -1,40 +1,80 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import BrandHall3D from "@/components/brand-hall-3d";
+import { AreaMix, DonutMix, MixLegend, StackBars } from "@/components/charts";
 import {
-  allBrandRooms,
-  areaOf,
   brandFloors,
-  brandTotals,
   floorOrder,
   kindMeta,
   type BrandFloor,
   type BrandRoom,
   type RoomKind,
 } from "@/lib/brand-hall";
+import {
+  brandDeltas,
+  brandFacts,
+  brandMoves,
+  brandSeries,
+  brandSnapshotAt,
+  brandSnapshots,
+  paintBrandRoom,
+  prettySchemeDate,
+  qiForDate,
+  type BrandSnapshot,
+} from "@/lib/brand-history";
+import { pct } from "@/lib/format";
+import { QUARTERS } from "@/lib/quarters";
+import { usePortfolio } from "@/lib/store";
+import { theme } from "@/lib/theme";
 
 export const Route = createFileRoute("/brand-hall")({ component: BrandHallPage });
 
 const fine = (value: number) => value.toLocaleString("ru-RU", { maximumFractionDigits: 2 });
 
 function BrandHallPage() {
+  const qi = usePortfolio((state) => state.qi);
+  const setQi = usePortfolio((state) => state.setQi);
+  const [pin, setPin] = useState<{ date: string; qi: number } | null>(null);
+  const quarterSnap = brandSnapshotAt(qi);
+  const snapshot: BrandSnapshot | null =
+    pin && pin.qi === qi ? (brandSnapshots.find((item) => item.date === pin.date) ?? quarterSnap) : quarterSnap;
+  const facts = brandFacts(snapshot);
+  const history = useMemo(() => brandDeltas(), []);
+  const mix = useMemo(() => brandSeries(), []);
+  const moves = useMemo(() => (snapshot ? brandMoves(snapshot.date) : []), [snapshot]);
   const [floorName, setFloorName] = useState("1 этаж");
   const [selectedId, setSelectedId] = useState("f1-105");
   const [mode, setMode] = useState<"3d" | "2d">("3d");
   const [filter, setFilter] = useState<RoomKind | "all">("all");
 
-  const floor = brandFloors.find((item) => item.name === floorName) ?? brandFloors[2];
-  const selected = allBrandRooms.find((item) => item.id === selectedId) ?? floor.rooms[0];
+  const floors = useMemo(
+    () =>
+      brandFloors.map((item) => ({
+        ...item,
+        rooms: item.rooms.map((room) => paintBrandRoom(room, snapshot)),
+      })),
+    [snapshot],
+  );
+  const floor = floors.find((item) => item.name === floorName) ?? floors[2];
+  const selected = floors.flatMap((item) => item.rooms).find((item) => item.id === selectedId) ?? floor.rooms[0];
   const visibleRooms = useMemo(
     () => floor.rooms.filter((room) => filter === "all" || room.kind === filter),
     [filter, floor],
   );
-  const floorArea = areaOf(floor.rooms);
-  const floorVacant = areaOf(floor.rooms, "vacant");
+  const floorRooms = snapshot?.rooms.filter((room) => room.floor === floor.name && room.id !== "3.04А" && room.area) ?? [];
+  const floorArea = floorRooms.reduce((sum, room) => sum + (room.area ?? 0), 0);
+  const floorVacant = floorRooms.filter((room) => room.kind === "vacant").reduce((sum, room) => sum + (room.area ?? 0), 0);
   const occupancy = floorArea > 0 ? ((floorArea - floorVacant) / floorArea) * 100 : null;
+  const levels = useMemo(() => levelRows(snapshot), [snapshot]);
+
+  const openScheme = (date: string) => {
+    const next = qiForDate(date);
+    setPin({ date, qi: next });
+    setQi(next);
+  };
 
   const changeFloor = (nextName: string) => {
-    const next = brandFloors.find((item) => item.name === nextName);
+    const next = floors.find((item) => item.name === nextName);
     setFloorName(nextName);
     setSelectedId(next?.rooms[0]?.id ?? "");
     setFilter("all");
@@ -44,37 +84,91 @@ function BrandHallPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-wrap items-end justify-between gap-4">
+      <header className="grid items-end gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <p className="kicker">Иркутск · архив схемы СР2-35</p>
+          <p className="kicker">Иркутск · {snapshot ? `схема ${prettySchemeDate(snapshot.stamp ?? snapshot.date)}` : "до первой схемы"}</p>
           <h1 className="mt-2 font-display text-4xl sm:text-5xl">ТД «Брэнд Холл»</h1>
           <p className="mt-3 max-w-2xl text-ink-soft">
-            ул. Карла Маркса, 35. Контуры и площади сняты со схемы от 01.05.2026: торговля, вакант, склады и
-            служебные. Парковка — условная модель на 10 мест.
+            ул. Карла Маркса, 35. Площади и цвета сняты с схем СР2-35, с 17 января 2023 по 1 мая 2026. Лента внизу
+            экрана двигает и этот объект, и общий портфель. Клик по строке истории открывает конкретный лист.
           </p>
+          <Link to="/pioneer" className="mt-4 inline-block text-sm text-copper">
+            3D-эталон «Пионер»
+          </Link>
         </div>
-        <Link to="/pioneer" className="text-sm text-copper">
-          3D-эталон «Пионер»
-        </Link>
+        <figure className="panel overflow-hidden">
+          <img
+            src="/photos/brand-hall.jpg"
+            alt="Фасад ТД «Брэнд Холл» на улице Карла Маркса"
+            className="aspect-[3/2] w-full object-cover object-top"
+          />
+          <figcaption className="flex items-baseline justify-between gap-3 px-4 py-3 text-sm">
+            <span>Карла Маркса, 35</span>
+            <span className="text-stone">Иркутск</span>
+          </figcaption>
+        </figure>
       </header>
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <Stat label="Учтённая площадь" value={`${fine(brandTotals.total)} м²`} note="без двойного счёта общих зон" />
+        <Stat label="Учтённая площадь" value={snapshot ? `${fine(facts.total)} м²` : "—"} note={snapshot ? `${facts.rooms} помещений с площадью` : "схемы ещё нет"} />
         <Stat
           label="Торговая"
-          value={`${fine(brandTotals.trade)} м²`}
-          note={`${((brandTotals.trade / brandTotals.total) * 100).toFixed(1)}% учтённой`}
+          value={snapshot ? `${fine(facts.trade)} м²` : "—"}
+          note={snapshot && facts.total ? `${((facts.trade / facts.total) * 100).toFixed(1)}% учтённой` : "занятая коммерция"}
         />
         <Stat
           label="Вакантная"
-          value={`${fine(brandTotals.vacant)} м²`}
-          note={`${((brandTotals.vacant / brandTotals.total) * 100).toFixed(1)}% учтённой`}
+          value={snapshot ? `${fine(facts.vacant)} м²` : "—"}
+          note={snapshot && facts.total ? `${((facts.vacant / facts.total) * 100).toFixed(1)}% учтённой` : "оранжевые зоны"}
         />
         <Stat
-          label="Склад + служебные"
-          value={`${fine(brandTotals.storage + brandTotals.service)} м²`}
-          note={`${brandTotals.levels} уровней · ${brandTotals.zones} зон`}
+          label="Склады"
+          value={snapshot ? `${fine(facts.storage)} м²` : "—"}
+          note={snapshot ? `служебные ${fine(facts.service)} м²` : "жёлтые зоны"}
         />
+      </section>
+
+      <section className="panel p-4 sm:p-5">
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-display text-2xl">Площадь во времени</h2>
+            <p className="text-sm text-stone">Последний лист каждого квартала. Пунктир — выбранный срез ленты.</p>
+          </div>
+          <MixLegend />
+        </div>
+        <AreaMix data={mix} mark={QUARTERS[qi]} />
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2">
+        <div className="panel p-4 sm:p-5">
+          <h2 className="font-display text-2xl">Смесь на срезе</h2>
+          <DonutMix
+            slices={[
+              { name: "Торговля", value: facts.trade, fill: theme.copper },
+              { name: "Склады", value: facts.storage, fill: theme.pine },
+              { name: "Вакант", value: facts.vacant, fill: theme.vacant },
+            ]}
+            center={facts.total ? pct(facts.occupancy) : "—"}
+            caption="занято"
+          />
+        </div>
+        <div className="panel p-4 sm:p-5">
+          <h2 className="font-display text-2xl">Уровни</h2>
+          <p className="mb-2 text-sm text-stone">Торговля, склады и вакант на открытом листе.</p>
+          <StackBars
+            data={levels.map((item) => ({
+              name: item.name.replace(" этаж", " эт."),
+              commercial: item.trade,
+              warehouse: item.storage,
+              vacant: item.vacant,
+            }))}
+            bars={[
+              { key: "commercial", name: "Торговля", fill: theme.copper },
+              { key: "warehouse", name: "Склады", fill: theme.pine },
+              { key: "vacant", name: "Вакант", fill: theme.vacant },
+            ]}
+          />
+        </div>
       </section>
 
       <div className="flex gap-1 overflow-x-auto">
@@ -150,7 +244,7 @@ function BrandHallPage() {
           <dl className="grid gap-2 text-sm">
             <Row term="Категория" value={floor.parking ? "Парковка" : kindMeta[selected.kind].label} />
             <Row term="Этаж" value={selected.floor} />
-            <Row term="Источник" value={floor.parking ? "Концепт" : "СР2-35 · 01.05.2026"} />
+            <Row term="Источник" value={snapshot ? `СР2-35 · ${prettySchemeDate(snapshot.stamp ?? snapshot.date)}` : "ещё нет схемы"} />
           </dl>
           {selected.note && <p className="text-sm text-copper-deep">{selected.note}</p>}
           <p className="text-sm text-stone">
@@ -196,31 +290,132 @@ function BrandHallPage() {
               <th className="px-4 py-2 text-right font-medium">Торговля</th>
               <th className="px-4 py-2 text-right font-medium">Вакант</th>
               <th className="px-4 py-2 text-right font-medium">Склад</th>
+              <th className="px-4 py-2 text-right font-medium">Служебные</th>
               <th className="px-4 py-2 text-right font-medium">Заполнение</th>
             </tr>
           </thead>
           <tbody>
-            {brandFloors.map((item) => {
-              const total = areaOf(item.rooms);
-              const vacant = areaOf(item.rooms, "vacant");
+            {levels.map((item) => (
+              <tr key={item.name}>
+                <td className="px-4 py-2">{item.name}</td>
+                <td className="nums px-4 py-2 text-right">{item.total ? fine(item.total) : "—"}</td>
+                <td className="nums px-4 py-2 text-right">{item.total ? fine(item.trade) : "—"}</td>
+                <td className="nums px-4 py-2 text-right">{item.total ? fine(item.vacant) : "—"}</td>
+                <td className="nums px-4 py-2 text-right">{item.total ? fine(item.storage) : "—"}</td>
+                <td className="nums px-4 py-2 text-right">{item.total ? fine(item.service) : "—"}</td>
+                <td className="nums px-4 py-2 text-right">
+                  {item.total ? `${(((item.total - item.vacant) / item.total) * 100).toFixed(1)}%` : "—"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section className="panel overflow-x-auto">
+        <table className="w-full min-w-[52rem] text-left text-sm">
+          <caption className="px-4 py-3 text-left">
+            <span className="font-display text-2xl">История схем</span>
+            <span className="mt-1 block text-sm text-stone">
+              {history.length} уникальных листов. Строка открывает схему на плане. Общая лента берёт последний лист
+              квартала
+              {quarterSnap && snapshot && quarterSnap.date !== snapshot.date
+                ? ` — сейчас открыт более ранний, на срезе портфеля ${prettySchemeDate(quarterSnap.stamp ?? quarterSnap.date)}`
+                : ""}
+              .
+            </span>
+          </caption>
+          <thead>
+            <tr className="text-xs text-stone">
+              <th className="px-4 py-2 font-medium">Штамп</th>
+              <th className="px-4 py-2 font-medium">Файл</th>
+              <th className="px-4 py-2 text-right font-medium">Учтено</th>
+              <th className="px-4 py-2 text-right font-medium">Торговля</th>
+              <th className="px-4 py-2 text-right font-medium">Вакант</th>
+              <th className="px-4 py-2 text-right font-medium">Склад</th>
+              <th className="px-4 py-2 text-right font-medium">Служебные</th>
+              <th className="px-4 py-2 text-right font-medium">Заполнение</th>
+              <th className="px-4 py-2 text-right font-medium">Помещений</th>
+            </tr>
+          </thead>
+          <tbody>
+            {history.map((row) => {
+              const active = snapshot?.date === row.date;
               return (
-                <tr key={item.name}>
-                  <td className="px-4 py-2">{item.name}</td>
-                  <td className="nums px-4 py-2 text-right">{total ? fine(total) : "—"}</td>
-                  <td className="nums px-4 py-2 text-right">{fine(areaOf(item.rooms, "trade"))}</td>
-                  <td className="nums px-4 py-2 text-right">{fine(vacant)}</td>
-                  <td className="nums px-4 py-2 text-right">{fine(areaOf(item.rooms, "storage"))}</td>
+                <tr
+                  key={row.date}
+                  className={active ? "bg-bone" : "cursor-pointer"}
+                  onClick={() => openScheme(row.date)}
+                >
+                  <td className="px-4 py-2">{prettySchemeDate(row.stamp ?? row.date)}</td>
+                  <td className="px-4 py-2 text-stone">{prettySchemeDate(row.date)}</td>
+                  <td className="nums px-4 py-2 text-right">{fine(row.facts.total)}</td>
                   <td className="nums px-4 py-2 text-right">
-                    {total ? `${(((total - vacant) / total) * 100).toFixed(1)}%` : "—"}
+                    {fine(row.facts.trade)}
+                    <span className="ml-1 text-xs text-stone">{signed(row.tradeDelta)}</span>
                   </td>
+                  <td className="nums px-4 py-2 text-right">
+                    {fine(row.facts.vacant)}
+                    <span className="ml-1 text-xs text-stone">{signed(row.vacantDelta)}</span>
+                  </td>
+                  <td className="nums px-4 py-2 text-right">
+                    {fine(row.facts.storage)}
+                    <span className="ml-1 text-xs text-stone">{signed(row.storageDelta)}</span>
+                  </td>
+                  <td className="nums px-4 py-2 text-right">{fine(row.facts.service)}</td>
+                  <td className="nums px-4 py-2 text-right">{row.facts.occupancy.toFixed(1)}%</td>
+                  <td className="nums px-4 py-2 text-right">{row.facts.rooms}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </section>
+
+      <section className="panel p-4">
+        <h2 className="font-display text-2xl">
+          Что изменилось
+          {snapshot ? ` к ${prettySchemeDate(snapshot.stamp ?? snapshot.date)}` : ""}
+        </h2>
+        {moves.length === 0 ? (
+          <p className="mt-3 text-sm text-stone">К предыдущему листу площади и статусы помещений не менялись, либо это первая схема.</p>
+        ) : (
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            {moves.map((move) => (
+              <li key={`${move.floor}-${move.id}`} className="border-t border-line pt-2 text-sm">
+                <p>
+                  {move.floor} · {move.id}
+                </p>
+                <p className="text-stone">
+                  {move.from ? kindMeta[move.from].label : "новое"} → {kindMeta[move.to].label}
+                  {" · "}
+                  {move.areaFrom === null ? "—" : `${fine(move.areaFrom)} м²`} →{" "}
+                  {move.areaTo === null ? "—" : `${fine(move.areaTo)} м²`}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
+}
+
+const LEVELS = ["Подвал", "1 этаж", "2 этаж", "3 этаж", "Мансарда"];
+
+function levelRows(snapshot: BrandSnapshot | null) {
+  return LEVELS.map((name) => {
+    const rooms = snapshot?.rooms.filter((room) => room.floor === name && room.id !== "3.04А" && room.area) ?? [];
+    const sum = (kind?: RoomKind) =>
+      rooms.filter((room) => kind === undefined || room.kind === kind).reduce((total, room) => total + (room.area ?? 0), 0);
+    return { name, total: sum(), trade: sum("trade"), vacant: sum("vacant"), storage: sum("storage"), service: sum("service") };
+  });
+}
+
+function signed(value: number): string {
+  if (!value) return "";
+  const text = fine(Math.abs(value));
+  return value > 0 ? `+${text}` : `−${text}`;
 }
 
 function Stat({ label, value, note }: { label: string; value: string; note: string }) {

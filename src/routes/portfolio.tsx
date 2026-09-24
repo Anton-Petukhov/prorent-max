@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { AssetCard } from "@/components/asset-card";
+import { MixChart, MixDonut, MixLegend } from "@/components/charts";
 import { LeaseTable } from "@/components/lease-table";
 import { KIND_LABEL, m2, pct } from "@/lib/format";
 import { assetSnaps } from "@/lib/metrics";
@@ -86,6 +87,19 @@ function PortfolioPage() {
               >
                 Открыть в 3D
               </button>
+            </div>
+          </div>
+          <div className="mb-6 grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
+            <div>
+              <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+                <h3 className="font-display text-2xl">Площадь во времени</h3>
+                <MixLegend />
+              </div>
+              <MixChart assets={[open.asset]} qi={qi} includeArchive={false} />
+            </div>
+            <div>
+              <h3 className="mb-3 font-display text-2xl">Смесь</h3>
+              <MixDonut assets={[open.asset]} qi={qi} includeArchive={false} />
             </div>
           </div>
           <LeaseTable asset={open.asset} qi={qi} />

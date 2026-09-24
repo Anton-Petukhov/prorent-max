@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ExpiryBars, MixChart, MixDonut, MixLegend, RentBars } from "@/components/charts";
 import { KpiRow } from "@/components/kpis";
 import { eur, m2, pct } from "@/lib/format";
-import { brandTotals } from "@/lib/brand-hall";
-import { electronBook } from "@/lib/electron";
+import { brandFacts, brandSnapshotAt, prettySchemeDate } from "@/lib/brand-history";
+import { electronFacts, electronSnapshotAt, prettySchemeDate as electronDate } from "@/lib/electron-history";
 import { pioneerTotals } from "@/lib/pioneer";
 import { cityRows, metricsAt, vacancyHeat, watchlist } from "@/lib/metrics";
 import { quarterPretty, QUARTERS } from "@/lib/quarters";
@@ -23,6 +23,10 @@ function AnalyticsPage() {
   const pioneer = pioneerTotals();
   const names = [...new Map(heat.map((cell) => [cell.assetId, cell])).values()];
   const label = QUARTERS[qi] ?? "2026-Q3";
+  const brand = brandFacts(brandSnapshotAt(qi));
+  const brandSnap = brandSnapshotAt(qi);
+  const electron = electronFacts(electronSnapshotAt(qi));
+  const electronSnap = electronSnapshotAt(qi);
 
   return (
     <div className="flex flex-col gap-6">
@@ -90,17 +94,23 @@ function AnalyticsPage() {
           </ul>
         </article>
         <article className="panel p-4 sm:p-5">
-          <p className="kicker">Архив Иркутска</p>
-          <h2 className="font-display text-2xl">Отдельные книги</h2>
-          <p className="mt-2 text-sm text-stone">Не смешаны с европейской лентой: там нет квартальной истории.</p>
+          <p className="kicker">Иркутск в ленте</p>
+          <h2 className="font-display text-2xl">Брэнд Холл и отдельные книги</h2>
+          <p className="mt-2 text-sm text-stone">
+            Брэнд Холл входит в общие KPI, смесь площади и таблицу городов с даты схемы. Ставка в евро его не
+            касается: на листах рубли, в rent roll они не смешиваются. У Электрона своя лента схем с 30.11.2022, в общие
+            KPI она не входит. Пионер остаётся фиксированным эталоном.
+          </p>
           <dl className="mt-4 grid gap-3 text-sm">
             <div className="border-t border-line pt-3">
-              <dt className="text-stone">Брэнд Холл</dt>
+              <dt className="text-stone">Брэнд Холл на срезе</dt>
               <dd className="nums mt-1">
-                {m2(brandTotals.total)} м² учтено · торговля {m2(brandTotals.trade)} · вакант {m2(brandTotals.vacant)}
+                {brand.total
+                  ? `${m2(brand.total)} м² · торговля ${m2(brand.trade)} · вакант ${m2(brand.vacant)} · склад ${m2(brand.storage)} · схема ${prettySchemeDate(brandSnap?.stamp ?? brandSnap?.date ?? "")}`
+                  : "до первой схемы 17.01.2023"}
               </dd>
               <Link to="/brand-hall" className="text-copper">
-                3D и статистика уровней
+                3D, уровни и история листов
               </Link>
             </div>
             <div className="border-t border-line pt-3">
@@ -115,10 +125,12 @@ function AnalyticsPage() {
             <div className="border-t border-line pt-3">
               <dt className="text-stone">ТЦ «Электрон»</dt>
               <dd className="nums mt-1">
-                {m2(electronBook.total)} м² · занято {pct(electronBook.occupancy)}% · вакант {m2(electronBook.vacant)} м²
+                {electron.total
+                  ? `${m2(electron.total)} м² · торговля ${m2(electron.trade)} · вакант ${m2(electron.vacant)} · склад ${m2(electron.storage)} · схема ${electronDate(electronSnap?.date ?? "")}`
+                  : "до первой схемы 30.11.2022"}
               </dd>
               <Link to="/electron" className="text-copper">
-                План двух этажей
+                Фото, график и история листов
               </Link>
             </div>
           </dl>
@@ -188,7 +200,7 @@ function AnalyticsPage() {
           </thead>
           <tbody>
             {cities.map((city) => (
-              <tr key={city.city} className="border-b border-line last:border-0">
+              <tr key={`${city.city}-${city.country}`} className="border-b border-line last:border-0">
                 <td className="py-2 pr-3">
                   {city.city}
                   <span className="block text-xs text-stone">{city.country}</span>

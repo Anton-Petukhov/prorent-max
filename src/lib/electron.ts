@@ -1,7 +1,7 @@
 import plan from "@/lib/electron-data.json";
 import facades from "@/lib/electron-facades.json";
 
-export type ElectronStatus = "occupied" | "vacant";
+export type ElectronStatus = "occupied" | "vacant" | "storage";
 export type Pt = [number, number];
 
 export type ElectronRoom = {
@@ -36,6 +36,7 @@ const facadeLines = facades as unknown as Record<string, Pt[][]>;
 
 export const electronStatus = {
   occupied: { label: "Занято / торговая", color: "#67d894" },
+  storage: { label: "Склад", color: "#e3c15a" },
   vacant: { label: "Вакантно", color: "#f18f74" },
 } as const;
 

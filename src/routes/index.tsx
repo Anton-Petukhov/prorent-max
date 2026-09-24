@@ -2,9 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AssetCard } from "@/components/asset-card";
 import { MixChart, MixDonut, MixLegend } from "@/components/charts";
 import { KpiRow } from "@/components/kpis";
-import { brandTotals } from "@/lib/brand-hall";
+import { brandFacts, brandSnapshotAt } from "@/lib/brand-history";
+import { electronFacts, electronSnapshotAt } from "@/lib/electron-history";
 import { eur, m2, pct } from "@/lib/format";
-import { electronBook } from "@/lib/electron";
 import { pioneerTotals } from "@/lib/pioneer";
 import { assetSnaps, eventsBetween, metricsAt } from "@/lib/metrics";
 import { quarterPretty, QUARTERS } from "@/lib/quarters";
@@ -22,6 +22,8 @@ function Home() {
   const label = QUARTERS[qi] ?? "2026-Q3";
   const events = eventsBetween(assets, Math.max(0, qi - 1), qi).slice(-3);
   const lead = snaps[0];
+  const brand = brandFacts(brandSnapshotAt(qi));
+  const electron = electronFacts(electronSnapshotAt(qi));
 
   return (
     <div className="flex flex-col gap-8">
@@ -103,27 +105,60 @@ function Home() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2">
-        <Link to="/brand-hall" className="panel block p-5">
-          <p className="kicker">Иркутск</p>
-          <h2 className="mt-2 font-display text-3xl">ТД «Брэнд Холл»</h2>
-          <p className="nums mt-3 text-sm text-stone">
-            {m2(brandTotals.total)} м² · торговля {m2(brandTotals.trade)} · вакант {m2(brandTotals.vacant)}
-          </p>
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Link to="/brand-hall" className="panel block overflow-hidden">
+          <img
+            src="/photos/brand-hall.jpg"
+            alt="Фасад ТД «Брэнд Холл», Иркутск"
+            className="aspect-[3/2] w-full object-cover object-top"
+          />
+          <span className="block px-4 py-4">
+            <span className="kicker">Иркутск</span>
+            <span className="mt-2 block font-display text-3xl text-ink">ТД «Брэнд Холл»</span>
+            <span className="nums mt-3 block text-sm text-stone">
+              {brand.total
+                ? `${m2(brand.total)} м² на срезе · вакант ${m2(brand.vacant)}`
+                : "до первой схемы 17.01.2023"}
+            </span>
+            <span className="mt-3 block h-1 bg-line">
+              <span
+                className="block h-full bg-pine"
+                style={{ width: `${brand.total ? Math.min(100, brand.occupancy) : 0}%` }}
+              />
+            </span>
+          </span>
         </Link>
-        <Link to="/pioneer" className="panel block p-5">
+        <Link to="/pioneer" className="panel flex flex-col justify-end p-5">
           <p className="kicker">3D-эталон</p>
           <h2 className="mt-2 font-display text-3xl">Галерея «Пионер»</h2>
           <p className="nums mt-3 text-sm text-stone">
             {m2(pioneerTotals().total)} м² · занято {pct(pioneerTotals().occupancy)}% · бронь {m2(pioneerTotals().reserved)} м²
           </p>
+          <span className="mt-4 block h-1 bg-line">
+            <span className="block h-full bg-pine" style={{ width: `${Math.min(100, pioneerTotals().occupancy)}%` }} />
+          </span>
         </Link>
-        <Link to="/electron" className="panel block p-5">
-          <p className="kicker">Иркутск · 20.07.2026</p>
-          <h2 className="mt-2 font-display text-3xl">ТЦ «Электрон»</h2>
-          <p className="nums mt-3 text-sm text-stone">
-            {m2(electronBook.total)} м² · занято {pct(electronBook.occupancy)}% · вакант {m2(electronBook.vacant)} м²
-          </p>
+        <Link to="/electron" className="panel block overflow-hidden">
+          <img
+            src="/photos/electron.jpg"
+            alt="Фасад ТЦ «Электрон», Иркутск"
+            className="aspect-[3/2] w-full object-cover object-center"
+          />
+          <span className="block px-4 py-4">
+            <span className="kicker">Иркутск</span>
+            <span className="mt-2 block font-display text-3xl text-ink">ТЦ «Электрон»</span>
+            <span className="nums mt-3 block text-sm text-stone">
+              {electron.total
+                ? `${m2(electron.total)} м² на срезе · вакант ${m2(electron.vacant)}`
+                : "до первой схемы 30.11.2022"}
+            </span>
+            <span className="mt-3 block h-1 bg-line">
+              <span
+                className="block h-full bg-pine"
+                style={{ width: `${electron.total ? Math.min(100, electron.occupancy) : 0}%` }}
+              />
+            </span>
+          </span>
         </Link>
       </section>
 

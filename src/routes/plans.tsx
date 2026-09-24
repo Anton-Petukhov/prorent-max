@@ -1,6 +1,7 @@
 import { useEffect, useState, type ComponentType } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PlanEditor } from "@/components/plan-editor";
+import { MixChart, MixLegend } from "@/components/charts";
 import type { CanvasZone } from "@/components/plan-canvas";
 import { USE_LABEL } from "@/lib/format";
 import { footprint } from "@/lib/portfolio";
@@ -30,6 +31,7 @@ function PlansPage() {
   const selectedId = usePortfolio((state) => state.selectedZoneId);
   const setPlanAsset = usePortfolio((state) => state.setPlanAsset);
   const selectZone = usePortfolio((state) => state.selectZone);
+  const qi = usePortfolio((state) => state.qi);
   const asset = assets.find((item) => item.id === planAssetId) ?? assets[0];
   const floor = asset?.floors.find((item) => item.id === planFloorId) ?? asset?.floors[0];
   const [CanvasView, setCanvasView] = useState<ComponentType<CanvasProps> | null>(null);
@@ -82,6 +84,16 @@ function PlansPage() {
           </select>
         </label>
       </header>
+      <section className="panel p-4 sm:p-5">
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-display text-2xl">Площадь во времени</h2>
+            <p className="text-sm text-stone">{asset.name}. Пунктир — выбранный квартал. Брэнд Холл в этот график не входит.</p>
+          </div>
+          <MixLegend />
+        </div>
+        <MixChart assets={[asset]} qi={qi} includeArchive={false} />
+      </section>
 
       <div className="grid items-start gap-4 lg:grid-cols-2">
         <div className="panel relative h-canvas min-h-80 overflow-hidden lg:sticky lg:top-24">
