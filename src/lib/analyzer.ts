@@ -93,7 +93,7 @@ export function parseDelimited(text: string, separator?: string): string[][] {
 
 function headerKey(label: string): "number" | "object" | "floor" | "area" | "status" | "note" | null {
   const h = column(label).replace(/[,;:]+/g, "");
-  if (/^(№|n|id|номер|номерпомещения|помещение|пом|помещениетц|комната|unit|room|roomnumber|unitnumber|лот|лотномер|space|shop|shopnumber)$/.test(h)
+  if (/^(№|n|номер|номерпомещения|помещение|пом|помещениетц|комната|unit|room|roomnumber|unitnumber|лот|лотномер|space|shop|shopnumber)$/.test(h)
     || /^(номер|№).*(помещ|лот|торгов)|^(номерпом|№пом)|^помещени[ея]|^room.*number|^unit.*number/.test(h)) return "number";
   if (/^(объект|тц|тд|здание|центр|комплекс|building|property|object)$/.test(h) || /^(наименованиеобъекта|торговыйцентр)$/.test(h)) return "object";
   if (/^(этаж|эт|уровень|floor|level)$/.test(h) || /^номерэтажа/.test(h)) return "floor";
@@ -129,7 +129,8 @@ export function roomsFromMatrix(matrix: string[][], defaultObject: string): Room
       headers = candidate; continue;
     }
     if (!headers) continue;
-    const number = clean(row[headers.number]);
+    const rawNumber = clean(row[headers.number]);
+    const number = rawNumber.replace(/^(?:торговое|офис|помещение|комната|складское|склад)\s*(?:№\s*)?/iu, "").trim() || rawNumber;
     if (!number || /^(итого|всего|total|сумма)$/i.test(number)) continue;
     const area = headers.area !== undefined ? areaOf(row[headers.area]) : null;
     const status = headers.status !== undefined ? statusOf(row[headers.status]) : "Неизвестно";
