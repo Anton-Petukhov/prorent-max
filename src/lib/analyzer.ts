@@ -18,7 +18,7 @@ export const STORAGE_KEY = "prorent-analyzer-archive-v1";
 const MAX_ROOMS = 15000;
 
 const clean = (s: unknown) => String(s ?? "").replace(/\u00a0/g, " ").trim();
-const column = (s: string) => clean(s).toLowerCase().replace(/[\s\-_.#()/\\]+/g, "").replace(/ё/g, "е");
+const column = (s: string) => clean(s).toLowerCase().replace(/[\s_.#()-]+/g, "").replace(/ё/g, "е");
 
 export function statusOf(value: unknown): RoomStatus {
   const s = clean(value).toLowerCase().replace(/ё/g, "е");
