@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Archive, ArrowLeftRight, CheckCircle2, Download, FileSpreadsheet, FileUp, History, Search, ShieldCheck, Upload, AlertTriangle } from "lucide-react";
+import { builtInOptions, importBuiltIn } from "@/lib/analyzer-sources";
 import {
   compareRooms, csvForDiff, demoRevisions, downloadText, identity, readArchive, roomsFromFile,
   roomsFromText, uniqueRooms, validateArchive, writeArchive, type Archive as RoomArchive,
@@ -15,6 +16,7 @@ const uid = () => globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36
 const countFormat = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 2 });
 const fmt = (n: number | null | undefined) => n === null || n === undefined ? "—" : countFormat.format(n);
 const TOTAL_STORAGE_LIMIT = 80;
+const BUILTIN_SOURCES = builtInOptions();
 
 function makeRevision(label: string, filename: string, rooms: Room[]): Revision {
   return { id: uid(), label, filename, rooms, at: new Date().toISOString() };
@@ -158,6 +160,21 @@ function AnalyzerPage() {
           <p className="kicker">{kicker}</p>
           <h2 className="mt-1 font-display text-2xl">{title}</h2>
           <p className="mt-2 text-xs text-stone">XLSX · CSV · TSV · TXT · PDF с текстовым слоем</p>
+          <div className="mt-4 rounded border border-line bg-bone p-3">
+            <label className="kicker" htmlFor={"built-in-"+side}>Или взять схему из ProRent MAX</label>
+            <select id={"built-in-"+side} value="" className="mt-2 w-full border border-line bg-paper p-3 text-sm text-ink" onChange={(event)=>{
+              const choice=BUILTIN_SOURCES.find((x)=>x.id===event.target.value);
+              if(!choice)return;
+              update(side,importBuiltIn(choice));
+              setObjectName(choice.objectName);
+              setNotice("Загружена историческая схема " + choice.title + ". Она доступна для сверки с Excel/PDF и другой схемой.");
+            }}>
+              <option value="">Выберите объект и дату схемы…</option>
+              <optgroup label="Брэнд Холл">{BUILTIN_SOURCES.filter((x)=>x.source==="brand").map((x)=><option key={x.id} value={x.id}>{x.title}</option>)}</optgroup>
+              <optgroup label="Электрон">{BUILTIN_SOURCES.filter((x)=>x.source==="electron").map((x)=><option key={x.id} value={x.id}>{x.title}</option>)}</optgroup>
+              <optgroup label="Пионер">{BUILTIN_SOURCES.filter((x)=>x.source==="pioneer").map((x)=><option key={x.id} value={x.id}>{x.title}</option>)}</optgroup>
+            </select>
+          </div>
           <label className="mt-4 flex cursor-pointer flex-col items-center gap-2 border border-dashed border-copper bg-bone p-6 text-center" onDragOver={(e)=>e.preventDefault()} onDrop={(e)=>{e.preventDefault();void takeFile(side,e.dataTransfer.files[0]);}}>
             <FileUp className="size-6 text-copper"/>
             <span className="text-sm font-medium">{busy === side ? "Читаю…" : "Перетащите файл или нажмите для выбора"}</span>
