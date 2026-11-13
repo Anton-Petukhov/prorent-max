@@ -10,6 +10,7 @@ const LINKS = [
   { to: "/", label: "Обзор" },
   { to: "/portfolio", label: "Портфель" },
   { to: "/analytics", label: "Аналитика" },
+  { to: "/analyzer", label: "Сверка" },
   { to: "/stack", label: "Шахматка" },
   { to: "/documents", label: "Документы" },
   { to: "/plans", label: "Планы 3D" },
