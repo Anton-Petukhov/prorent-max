@@ -18,7 +18,7 @@ export const STORAGE_KEY = "prorent-analyzer-archive-v1";
 const MAX_ROOMS = 15000;
 
 const clean = (s: unknown) => String(s ?? "").replace(/\u00a0/g, " ").trim();
-const column = (s: string) => clean(s).toLowerCase().replace(/[\s\-_.№#()/\\]+/g, "").replace(/ё/g, "е");
+const column = (s: string) => clean(s).toLowerCase().replace(/[\s\-_.#()/\\]+/g, "").replace(/ё/g, "е");
 
 export function statusOf(value: unknown): RoomStatus {
   const s = clean(value).toLowerCase().replace(/ё/g, "е");
@@ -102,7 +102,7 @@ function textRooms(text: string, defaultObject: string): Room[] {
   for (const line of text.split(/\r?\n/)) {
     const l = line.replace(/\s+/g, " ").trim();
     if (!l || l.length > 280) continue;
-    const m = l.match(/(?:^|\s)(?:пом(?:ещение)?\.?\s*№?\s*|№\s*|room\s*|unit\s*)([\wА-Яа-я./-]{1,20})[;:,\s-]+(?:пл(?:ощадь)?\.?\s*[:=\s]*)?([\d\s.,]+)\s*(?:м²|м2|кв\.?\s*м|sqm)\b?/iu)
+    const m = l.match(/(?:^|\s)(?:пом(?:ещение)?\.?\s*№?\s*|№\s*|room\s*|unit\s*)([\wА-Яа-я./-]{1,20})[;:,\s-]+(?:пл(?:ощадь)?\.?\s*[:=\s]*)?([\d\s.,]+)\s*(?:м²|м2|кв\.?\s*м|sqm)/iu)
       ?? l.match(/^([\wА-Яа-я./-]{1,18})\s*[;|\t]+\s*([\d.,]+)\s*(?:м²|м2)?(?:\s*[;|\t ]+\s*(.*))?$/iu);
     if (!m) continue;
     const number = clean(m[1]);
