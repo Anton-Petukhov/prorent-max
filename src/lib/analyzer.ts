@@ -88,12 +88,14 @@ export function parseDelimited(text: string, separator?: string): string[][] {
 }
 
 function headerKey(label: string): "number" | "object" | "floor" | "area" | "status" | "note" | null {
-  const h = column(label);
-  if (/^(№|n|id|номер|номерпомещения|помещение|пом|помещениетц|комната|unit|room|roomnumber|unitnumber|лот|лотномер|space|shop|shopnumber)$/.test(h)) return "number";
-  if (/^(объект|тц|тд|здание|центр|комплекс|building|property|object)$/.test(h)) return "object";
-  if (/^(этаж|эт|уровень|floor|level)$/.test(h)) return "floor";
-  if (/^(площадь|площадьм2|площадьм²|общаяплощадь|площадьпомещения|sqm|area|aream2|квм|м2|м²|s)$/.test(h)) return "area";
-  if (/^(статус|состояние|занятость|вакантность|status|occupancy|аренда)$/.test(h)) return "status";
+  const h = column(label).replace(/[,;:]+/g, "");
+  if (/^(№|n|id|номер|номерпомещения|помещение|пом|помещениетц|комната|unit|room|roomnumber|unitnumber|лот|лотномер|space|shop|shopnumber)$/.test(h)
+    || /^(номер|№).*(помещ|лот|торгов)|^(номерпом|№пом)|^помещени[ея]|^room.*number|^unit.*number/.test(h)) return "number";
+  if (/^(объект|тц|тд|здание|центр|комплекс|building|property|object)$/.test(h) || /^(наименованиеобъекта|торговыйцентр)$/.test(h)) return "object";
+  if (/^(этаж|эт|уровень|floor|level)$/.test(h) || /^номерэтажа/.test(h)) return "floor";
+  if (/площ|^sqm|^area|^квм$|^м2$|^м²$|^s$/.test(h) && !/вакантнаяплощадь|свободнаяплощадь/.test(h)) return "area";
+  if (/^(статус|состояние|занятость|вакантность|status|occupancy|аренда)$/.test(h)
+    || /^(статус|занятость|вакантность|состояние|аренда)/.test(h)) return "status";
   if (/^(примечание|арендатор|комментарий|comment|tenant|note)$/.test(h)) return "note";
   return null;
 }
