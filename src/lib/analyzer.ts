@@ -34,7 +34,11 @@ export function areaOf(value: unknown): number | null {
   return n !== null && n >= 0 && n <= 1000000 ? Math.round(n * 100) / 100 : null;
 }
 export function identity(r: Pick<Room, "object" | "floor" | "number">): string {
-  return [r.object, r.floor, r.number].map((s) => column(s).replace(/^0+(?=\d+$)/, "")).join("|");
+  const objectKey = column(r.object).replace(/[«»"']/g, "").replace(/^(тц|тд|тк|торговыйцентр)/, "");
+  const floorKey = column(r.floor).replace(/(этаж|эт|floor|level|уровень)/g, "").replace(/й$/, "").replace(/^0+(?=\d+$)/, "");
+  const number = clean(r.number).toLowerCase().replace(/\s+/g, "").replace(/^№/, "").replace(/ё/g, "е");
+  const numberKey = number.replace(/^0+(?=\d+$)/, "");
+  return [objectKey, floorKey, numberKey].join("|");
 }
 export function uniqueRooms(rooms: Room[]) {
   const map = new Map<string, Room>();
