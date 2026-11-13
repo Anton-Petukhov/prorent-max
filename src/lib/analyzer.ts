@@ -137,7 +137,7 @@ export function roomsFromMatrix(matrix: string[][], defaultObject: string): Room
     if (area === null && status === "Неизвестно" && !note) continue;
     result.push({ object: clean(row[headers.object]) || defaultObject, floor: clean(row[headers.floor]), number, area, status, note });
   }
-  return result.length ? result : textRooms(matrix.map((row) => row.join("\t")).join("\n"), defaultObject);
+  return result;
 }
 function parseXlsx(buffer: ArrayBuffer, defaultObject: string): Room[] {
   const zip = unzipSync(new Uint8Array(buffer), { filter: (entry) => entry.originalSize < 15_000_000 && entry.name.startsWith("xl/") });
@@ -171,7 +171,8 @@ function parseXlsx(buffer: ArrayBuffer, defaultObject: string): Room[] {
       rows.push(cols);
       if (rows.length >= MAX_ROOMS) break;
     }
-    rooms.push(...roomsFromMatrix(rows, defaultObject));
+    const parsed = roomsFromMatrix(rows, defaultObject);
+    rooms.push(...(parsed.length ? parsed : textRooms(rows.map((row) => row.join("\t")).join("\n"), defaultObject)));
     if (rooms.length >= MAX_ROOMS) break;
   }
   return rooms.slice(0, MAX_ROOMS);
@@ -187,7 +188,8 @@ export async function roomsFromFile(file: File, defaultObject: string): Promise<
 }
 export function roomsFromText(text: string, defaultObject: string): Room[] {
   const matrix = parseDelimited(text, /\t/.test(text) ? "\t" : undefined);
-  return roomsFromMatrix(matrix, defaultObject).slice(0, MAX_ROOMS);
+  const table = roomsFromMatrix(matrix, defaultObject);
+  return (table.length ? table : textRooms(text, defaultObject)).slice(0, MAX_ROOMS);
 }
 export function demoRevisions(): [Revision, Revision] {
   const prev: Room[] = [
